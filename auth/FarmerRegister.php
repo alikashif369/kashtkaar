@@ -474,6 +474,25 @@
             margin-bottom: 1rem;
         }
     }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    .btn-primary {
+        background: #3498db;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: all 0.3s;
+        width: auto;
+        min-width: 200px;
+    }
     </style>
 </head>
 
@@ -588,12 +607,10 @@
                     </div>
 
                     <!-- Register Button -->
-                    <div class="form-group row">
-                        <div class="col-md-8 offset-md-4">
-                            <button type="submit" class="btn btn-primary" name="register">
-                                <i class="fas fa-user-plus mr-2"></i>Register
-                            </button>
-                        </div>
+                    <div class="btn-container">
+                        <button type="submit" class="btn btn-primary" name="register">
+                            <i class="fas fa-user-plus mr-2"></i>Register
+                        </button>
                     </div>
                 </form>
             </div>
