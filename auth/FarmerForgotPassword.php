@@ -1,337 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Forgot Password</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <a href="https://icons8.com/icon/83325/roman-soldier"></a>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-<!-- 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
     <style>
-        h1 {
-            background-color: transparent;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-align: center;
-            cursor: pointer
-        }
-
-        .box {
-            color: rgb(6, 36, 7);
-            width: 350px;
-            line-height: 40px;
-            margin: auto;
-            text-align: center;
-            margin-top: 50px;
-            padding: 5px;
-            border-style: outset;
-            border-width: 5px;
-
-            border-radius: 16px;
-            border-color: green;
-        }
-
         body {
-            /* background-image: url(Images/Website/FarmerLogin.jpg); */
-            /* background: black; */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: white;
-            background-image: url(../Images/Website/forgotpassword.jpg);
-            border: chartreuse;
-        }
-
-        form {
-            margin: 10px;
-            padding: 10px;
-            background-color: rgb(247, 248, 247);
-
-        }
-
-        input {
-            padding: 7px;
-            margin: 10px;
-            border-color: rgb(78, 180, 121);
-            display: inline-block;
-            border-radius: 16px;
-        }
-
-        input[type="submit"] {
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            background-color: green;
-            /* display: inline-block; */
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            width: 44%;
-        }
-
-        input[type="submit"]:hover {
-            background-color: rgb(97, 16, 33);
-            outline: none;
-            border-color: blanchedalmond;
-            color: rgb(155, 248, 4);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(155, 248, 4);
-            font-weight: bolder;
-            width: 54%;
-            font-size: 18px;
-
-        }
-    </style> -->
-    <style>
-        h3 {
-            background-color: transparent;
-            font-family:  sans-serif;
-            text-align: center;
-            cursor: pointer;
-            /* color: rgb(0, 61, 153); */
-            color:black;
-        }
-
-        .box {
-            color: rgb(6, 36, 7);
-            width: 370px;
-            line-height: 40px;
-            margin: auto;
-            text-align: center;
-            margin-top: 50px;
-            padding: 5px;
-            border-style: outset;
-            border-width: 5px;
-            border-radius: 16px;
-            /* border-color: rgb(0, 172, 230); */
-            border-color:black;
-        }
-
-        body {
-            /* background-image: url(Images/Website/FarmerLogin.jpg); */
-            /* background: black; */
-            /* background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: white;
-            background-image: url(../Images/Website/BuyerLogin.jpeg); */
-            border: chartreuse;
-        }
-
-        form {
-            margin: 10px;
-            padding: 20px;
-            background-color: rgb(247, 248, 247);
-
-        }
-
-        .inp {
-            padding: 5px;
-            margin: 10px;
-            /* border-color: rgb(0, 172, 230); */
-            border-color:black;
-            display: inline-block;
-            border-radius: 16px;
-            width:80%;
-            text-align: center;
-        }
-
-        input[type="submit"] {
-            cursor: pointer;
-            font-size: 17px;
-         padding-left:5%;
-         padding-right:5%;
-            font-weight: bold;
-            color: goldenrod;
-            background-color:#292b2c;
-            border-radius: 16px;
-            border-color:black;
-            width: auto;
-        }
-/* 
-        input[type="submit"]:hover {
-            background-color: rgb(0, 153, 255);
-            outline: none;
-            color: rgb(255, 255, 255);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(0, 57, 230);
-            font-weight: bolder;
-            width: 54%;
-            font-size: 18px;
-
-        } */
-        .myfooter {
-        background-color: #292b2c;
-
-        color: goldenrod;
-        margin-top: 15px;
-    }
-
-    .aligncenter {
-        text-align: center;
-    }
-
-    a {
-        color: goldenrod;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    nav {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom {
-        background-color: #292b2c;
-    }
-
-    /* change the brand and text color */
-    .navbar-custom .navbar-brand,
-    .navbar-custom .navbar-text {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .navbar-nav .nav-link {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .nav-item.active .nav-link,
-    .navbar-custom .nav-item:hover .nav-link {
-        background-color: #292b2c;
-    }
-
-
-    .mybtn {
-        border-color: green;
-        border-style: solid;
-    }
-
-
-    .right {
-        display: flex;
-    }
-
-    .left {
-        display: none;
-    }
-
-    .cart {
-        /* margin-left:10px; */
-        margin-right: -9px;
-    }
-
-    .profile {
-        margin-right: 2px;
-
-    }
-
-    .login {
-        margin-right: -2px;
-        margin-top: 12px;
-        display: none;
-    }
-
-    .searchbox {
-        width: 60%;
-    }
-
-    .lists {
-        display: inline-block;
-    }
-
-    .moblists {
-        display: none;
-    }
-
-    .logins {
-        text-align: center;
-        margin-right: -30%;
-        margin-left: 35%;
-    }
-    @media only screen and (min-device-width:320px) and (max-device-width:480px) {
-        /* .mycarousel {
-            display: none;
-        }
-
-        .firstimage {
-            height: auto;
-            width: 90%;
-        }
-
-        .card {
-            width: 80%;
-            margin-left: 10%;
-            margin-right: 10%;
-
-        }
-
-        .col {
-            margin-top: 20px;
-        } */
-
-        .right {
-            display: none;
-            background-color: #ff5500;
-        }
-
-        /* 
-            .settings{
-            margin-left:79%;
-        } */
-        .left {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Roboto', sans-serif;
+            position: relative;
+            background: #f5f8fa;
         }
 
-        .moblogo {
-            display: none;
+        #vanta-background {
+            position: fixed;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
-        .logins {
+        .forgot-container {
+            max-width: 400px;
+            width: 90%;
+            margin: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .forgot-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .forgot-header {
+            background: #2c3e50;
+            padding: 2rem 1.5rem;
             text-align: center;
-            margin-right: 35%;
-            padding: 15px;
+            color: white;
         }
 
-        .searchbox {
-            width: 95%;
-            margin-right: 5%;
-            margin-left: 0%;
+        .forgot-header i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
         }
 
-        .moblists {
-            display: inline-block;
-            text-align: center;
+        .forgot-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border: 2px solid #e1e8ef;
+            border-radius: 50px;
+            padding: 0.8rem 1.2rem;
+            transition: all 0.3s;
             width: 100%;
         }
-        /* .pic{
-        height:auto;
-    } */
-    
-    /* .mobtext{
-        display:none;
-    }
-    .destext{
-        display:inline-block;
-        width:90%;
-        margin-left: 5%;
-        margin-right: 5%;
-    } */
-    }
+
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            outline: none;
+        }
+
+        .btn-update {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.8rem 2rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-update:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .back-to-login {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .back-to-login a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-to-login a:hover {
+            color: #3498db;
+        }
+
+        @media (max-width: 480px) {
+            .forgot-container {
+                margin: 1rem;
+            }
+        }
     </style>
+</head>
+
+<body>
+    <div id="vanta-background"></div>
+    <div class="forgot-container">
+        <div class="forgot-card">
+            <div class="forgot-header">
+                <i class="fas fa-lock"></i>
+                <h4>Reset Password</h4>
+            </div>
+            <div class="forgot-body">
+                <form name="forgot-password-form" action="FarmerForgotPassword.php" method="post" onsubmit="return validateForm()">
+                    <div class="form-group">
+                        <label><i class="fas fa-phone-alt mr-2"></i>Phone Number</label>
+                        <input type="text" class="form-control" name="phonenumber" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-id-card mr-2"></i>CNIC Number</label>
+                        <input type="text" class="form-control" name="cnic" placeholder="Enter your CNIC number" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock mr-2"></i>New Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter new password" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock mr-2"></i>Confirm Password</label>
+                        <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm new password" required>
+                    </div>
+                    <button type="submit" class="btn btn-update" name="register">
+                        <i class="fas fa-sync-alt mr-2"></i>Update Password
+                    </button>
+                    <div class="back-to-login">
+                        <a href="FarmerLogin.php"><i class="fas fa-arrow-left mr-2"></i>Back to Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
+        VANTA.WAVES({
+            el: "#vanta-background",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x3498db,
+            shininess: 30.00,
+            waveHeight: 20.00,
+            waveSpeed: 0.50,
+            zoom: 0.75
+        });
+
         function validateForm() {
             var password = document.forms["forgot-password-form"]["password"].value;
             var confirmPassword = document.forms["forgot-password-form"]["confirmpassword"].value;
@@ -343,28 +188,8 @@
             return true;
         }
     </script>
-</head>
-
-<body>
-
-    <div class="box">
-        <form name="forgot-password-form" action="FarmerForgotPassword.php" method="post" onsubmit="return validateForm()">
-            <h3>FORGOT PASSWORD</h3>
-            <br>
-            <input type="phonenumber" class="inp" name="phonenumber" placeholder="Phone Number"><br>
-            <input type="text" class="inp" name="cnic" placeholder="CNIC Number"><br>
-            <input type="password" class="inp" name="password" placeholder="Password" required><br>
-            <input type="password" class="inp" name="confirmpassword" placeholder="Confirm Password" required><br>
-            <span style=" display:block;  margin-bottom: .75em; "></span>
-<br>
-            <input type="submit" name="register" value="Update Password">
-        </form>
-    </div>
-   
 </body>
-
 </html>
-
 
 <?php
 include("../Includes/db.php");
