@@ -296,40 +296,75 @@
     }
 
     //function which is link with FarmerHomePage
-    function getFarmerProducts()
-    {
+    function getFarmerProducts() {
         include("../Includes/db.php");
         global $con;
         $sess_phone_number = $_SESSION['phonenumber'];
-        $query = "select * from products where farmer_fk in (select farmer_id from farmerregistration where farmer_phone=$sess_phone_number) ";
+        $query = "select * from products where farmer_fk in (select farmer_id from farmerregistration where farmer_phone=$sess_phone_number)";
         $run_query = mysqli_query($con, $query);
-        $count = 0;
-        if ($run_query) {
+        
+        if ($run_query && mysqli_num_rows($run_query) > 0) {
+            echo '<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">';
+            
             while ($row = mysqli_fetch_assoc($run_query)) {
-                $count = $count + 1;
-                $product_title =  $row['product_title'];
-                $image =  $row['product_image'];
-                $price =  $row['product_price'];
-                $id =     $row['product_id'];
-                $path = "../Admin/product_images/" . $image;
-
+                $product_title = $row['product_title'];
+                $image = $row['product_image'];
+                $price = $row['product_price'];
+                $stock = $row['product_stock'];
+                $id = $row['product_id'];
+                $description = substr($row['product_desc'], 0, 100) . '...';
+                
+                $stock_class = ($stock < 10) ? 'badge bg-danger' : 'badge bg-success';
+                $stock_text = ($stock < 10) ? 'Low Stock' : 'In Stock';
+                
+                // Image path with fallback
+                $img_src = $image ? "../Admin/product_images/$image" : "../Images/Website/noimage.jpg";
+                
                 echo "
-                    <div class='productbox'>
-                        <a href='../FarmerPortal/FarmerProductDetails.php?id=$id'>
-                        <img src='../Admin/product_images/$image' alt= 'Image Not Available' onerror=this.src='../Images/Website/noimage.jpg'>
-                        </a>
-
-                        <div>
-                            <p><b>$product_title</b></p>
-                            <p><b>Price : Rs $price</b></p>
+                <div class='col'>
+                    <div class='card h-100 shadow-sm'>
+                        <div class='position-relative'>
+                            <div class='ratio ratio-16x9'>
+                                <img src='$img_src' 
+                                     class='card-img-top object-fit-cover' 
+                                     style='max-height: 180px;' 
+                                     alt='Product image'>
+                            </div>
+                            <span class='position-absolute top-0 end-0 m-2 $stock_class'>$stock_text</span>
                         </div>
-
-                    </div>";
+                        
+                        <!-- Rest of the card content remains the same -->
+                        <div class='card-body d-flex flex-column'>
+                            <h5 class='card-title text-truncate'>$product_title</h5>
+                            <div class='fs-4 fw-bold text-primary mb-3'>₨ $price</div>
+                            <div class='small text-muted mb-3'>
+                                <i class='fas fa-cubes me-1'></i>Stock: $stock units
+                            </div>
+                            <p class='card-text flex-grow-1'>$description</p>
+                            
+                            <div class='d-flex gap-2 mt-auto'>
+                                <a href='EditProduct.php?id=$id' class='btn btn-primary flex-grow-1'>
+                                    <i class='fas fa-edit me-1'></i> Edit
+                                </a>
+                                <button onclick=\"if(confirm('Are you sure you want to delete this product?')) location.href='DeleteProduct.php?id=$id'\" 
+                                        class='btn btn-danger flex-grow-1'>
+                                    <i class='fas fa-trash me-1'></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>";
             }
+            
+            echo '</div>';
         } else {
-            echo "<br><br><hr><h1 align = center>Product Not Uploaded !</h1><br><br><hr>";
+            echo "<div class='alert alert-info text-center m-5'>
+                    <i class='fas fa-box-open fa-3x mb-3'></i>
+                    <p class='mb-0'>No products found. Add some products to get started!</p>
+                  </div>";
         }
     }
+
     //function which is linked with BuyerProductDetails
     function getBuyerProductDetails()
     {

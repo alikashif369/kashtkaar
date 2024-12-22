@@ -22,7 +22,7 @@
 	 <script src="../portal_files/jquery.min.js.download"></script>
 	 <script src="../portal_files/popper.min.js.download"></script>
 	 <script src="../portal_files/bootstrap.min.js.download"></script>
-	<style>
+	<!-- <style>
 	 * {
 			   margin: 0;
 			   box-sizing: border-box;
@@ -826,7 +826,7 @@
 		   }
 	   }
 	   
-	 </style>
+	 </style> -->
 
 </head>
 <body>
@@ -915,7 +915,7 @@
 	</nav>
 
 
-
+<!-- 
 	<div class="row" style="text-align:center;">
 		  <div class="col-md-3 col-sm-12">
 			   <a href="farmerHomepage.php" id="navbar"><i class="fa fa-home" aria-hidden="true"></i><label>Home</label></a>
@@ -930,16 +930,16 @@
 		  <a href="CallCenter.php" id="navbar"><i class="fa fa-phone fa-rotate-vertical" aria-hidden="true"></i><label>Call Centers/SMS</label></a>
 		  </div>
 	</div>  
-	<hr>
+	<hr> -->
 
-	<div class="row text-center">
+	<!-- <div class="row text-center">
 		<div class="col">
 			<h4 style="font-weight: bold;color:black;">All Products</h4>
 		</div>
 		<div class="col">
 			<button class="btn btn-primary btn-lg">Insert Product</button>
 		</div>
-	</div>
+	</div> -->
 
 <hr>
 
