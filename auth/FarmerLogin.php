@@ -14,131 +14,107 @@ include("../Functions/functions.php");
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Roboto', sans-serif;
-            position: relative;
-            overflow: hidden;
-            background: #f5f8fa;
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #88c057;
+            --hover-color: #34495e;
+            --white: #ffffff;
+            --light-gray: #eee;
         }
 
-        #vanta-background {
-            position: fixed;
-            z-index: -1;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        body {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+                        url('../Images/Website/farm-landscape.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .login-container {
-            max-width: 400px;
-            width: 90%;
-            margin: 2rem;
-            position: relative;
-            z-index: 1;
+            max-width: 500px; /* Increased from 400px */
+            margin: 0 auto;
+            padding: 2rem;
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
         .login-header {
-            background: #2c3e50;
-            padding: 2rem 1.5rem;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 1.5rem;
             text-align: center;
-            color: white;
-        }
-
-        .login-header i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #3498db;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
         .login-body {
             padding: 2rem;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            font-weight: 500;
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
         .form-control {
-            border: 2px solid #e1e8ef;
             border-radius: 50px;
-            padding: 0.8rem 1.2rem;
+            padding: 12px 20px;
+            height: auto;
+            border: 2px solid var(--light-gray);
             transition: all 0.3s;
-            width: 100%;
         }
 
         .form-control:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(136, 192, 87, 0.25);
         }
 
         .btn-login {
-            background: #3498db;
-            color: white;
-            border: none;
+            background: var(--secondary-color);
+            color: var(--white);
             border-radius: 50px;
-            padding: 0.8rem;
-            width: 100%;
+            padding: 12px 30px;
             font-weight: 500;
+            letter-spacing: 0.5px;
             transition: all 0.3s;
         }
 
         .btn-login:hover {
-            background: #2980b9;
+            background: var(--hover-color);
             transform: translateY(-2px);
         }
 
+        .form-group label {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
         .login-links {
-            margin-top: 1.5rem;
             text-align: center;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         .login-links a {
-            color: #2c3e50;
+            color: var(--primary-color);
             text-decoration: none;
             font-weight: 500;
-            display: block;
-            margin: 0.5rem 0;
             transition: color 0.3s;
+            padding: 5px 0;
         }
 
         .login-links a:hover {
-            color: #3498db;
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                margin: 1rem;
-            }
+            color: var(--secondary-color);
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
 </head>
 
 <body>
-    <div id="vanta-background"></div>
     <div class="container login-container">
         <div class="login-card">
             <div class="login-header">
@@ -164,23 +140,6 @@ include("../Functions/functions.php");
             </div>
         </div>
     </div>
-    <script>
-        VANTA.WAVES({
-            el: "#vanta-background",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x3498db,
-            shininess: 30.00,
-            waveHeight: 20.00,
-            waveSpeed: 0.50,
-            zoom: 0.75
-        });
-    </script>
 </body>
 
 </html>
