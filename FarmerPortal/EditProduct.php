@@ -264,7 +264,7 @@ if (isset($_POST['update_pro'])) {
 
     if ($run_update) {
         echo "<script>alert('Product updated successfully');</script>";
-        echo "<script>window.open('FarmerProductDetails.php?id=$id','_self')</script>";
+        echo "<script>window.open('MyProducts.php','_self')</script>";
     } else {
         echo "<script>alert('Failed to update product');</script>";
     }

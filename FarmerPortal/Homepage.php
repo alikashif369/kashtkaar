@@ -22,7 +22,7 @@
      <script src="../portal_files/popper.min.js.download"></script>
      <script src="../portal_files/bootstrap.min.js.download"></script>
 
-     <style>
+     <!-- <style>
           * {
                margin: 0;
                box-sizing: border-box;
@@ -631,13 +631,13 @@
                margin-left: 290px;
                text-align: center;
           }
-     </style>
+     </style> -->
 
 </head>
 
 <body>
 
-     <div class="header">
+     <!-- <div class="header">
 
           <a href="Homepage.php"><img id="logo" src="../portal_files/logo.jpg"></a>
 
@@ -672,25 +672,25 @@
           <div class="loginz">
                <?php getFarmerUsername(); ?>
           </div>
-     </div>
+     </div> -->
 
      <br>
 
      </div>
 
 
-     <div class="headerdown">
+     <!-- <div class="headerdown">
 
           <a href="Homepage.php" id="navbar"><i class="fa fa-home" aria-hidden="true"></i><label>Home</label></a>
           <a href="MyProducts.php" id="navbar"><i class="fa fa-leaf" aria-hidden="true"></i><label>My Products</label></a>
           <a href="Transactions.php" id="navbar"><i class="fa fa-exchange" aria-hidden="true"></i><label>My Transactions</label></a>
           <a href="CallCenter.php" id="navbar"><i class="fa fa-phone fa-rotate-vertical" aria-hidden="true"></i><label>Call Centers And Sms</label></a>
           <hr>
-     </div>
+     </div> -->
 
 
 
-     <div class="slideshow" id="showing">
+     <!-- <div class="slideshow" id="showing">
           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class=""></li>
@@ -712,7 +712,7 @@
                     </div>
                </div>
           </div>
-     </div>
+     </div> -->
 
 
      <div class="pictus">

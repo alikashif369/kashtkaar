@@ -198,19 +198,24 @@ if (isset($_POST['login'])) {
         $encryption_iv
     );
 
-    $query = "select * from buyerregistration where buyer_phone = '$phonenumber' and buyer_password = '$encryption'";
+    $query = "SELECT * FROM buyerregistration WHERE buyer_phone = '$phonenumber' AND buyer_password = '$encryption'";
     $run_query = mysqli_query($con, $query);
+
+    if (!$run_query) {
+        die("Query Failed: " . mysqli_error($con));
+    }
+
     $count_rows = mysqli_num_rows($run_query);
     if ($count_rows == 0) {
         echo "<script>alert('Please Enter Valid Details');</script>";
         echo "<script>window.open('BuyerLogin.php','_self')</script>";
-    }
-    while ($row = mysqli_fetch_array($run_query)) {
-        $id = $row['buyer_id'];
-    }
+    } else {
+        while ($row = mysqli_fetch_array($run_query)) {
+            $id = $row['buyer_id'];
+        }
 
-    $_SESSION['phonenumber'] = $phonenumber;
-    echo "<script>window.open('../BuyerPortal2/bhome.php','_self')</script>";
+        $_SESSION['phonenumber'] = $phonenumber;
+        echo "<script>window.open('../BuyerPortal2/bhome.php','_self')</script>";
+    }
 }
-
 ?>

@@ -1,5 +1,4 @@
 <?php
-
 include("../Includes/db.php");
 session_start();
 $sessphonenumber = $_SESSION['phonenumber'];
@@ -14,7 +13,6 @@ while ($row = mysqli_fetch_array($run_query)) {
     $state = $row['farmer_state'];
     $district = $row['farmer_district'];
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +95,7 @@ while ($row = mysqli_fetch_array($run_query)) {
             cursor: not-allowed;
         }
 
-        .btn-edit {
+        .btn-edit, .btn-home {
             background: var(--secondary-color);
             color: white;
             border: none;
@@ -107,14 +105,14 @@ while ($row = mysqli_fetch_array($run_query)) {
             font-size: 1.1rem;
             width: 100%;
             max-width: 300px;
-            margin: 2rem auto 0;
+            margin: 1rem auto 0;
             display: block;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .btn-edit:hover {
+        .btn-edit:hover, .btn-home:hover {
             background: #2980b9;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
@@ -142,7 +140,7 @@ while ($row = mysqli_fetch_array($run_query)) {
                 font-size: 2rem;
             }
 
-            .btn-edit {
+            .btn-edit, .btn-home {
                 width: 100%;
             }
         }
@@ -224,6 +222,9 @@ while ($row = mysqli_fetch_array($run_query)) {
                     <i class="fas fa-key mr-2"></i>Change Password
                 </a>
             </div>
+            <a href="farmerHomepage.php" class="btn-home mt-4">
+                <i class="fas fa-home mr-2"></i>Home
+            </a>
         </div>
     </div>
 
@@ -258,7 +259,6 @@ while ($row = mysqli_fetch_array($run_query)) {
 </html>
 
 <?php
-
 if (isset($_POST['confirm'])) {
     $phone = mysqli_real_escape_string($con, $_POST['phonenumber']);
     $address = mysqli_real_escape_string($con, $_POST['address']);
@@ -274,6 +274,6 @@ if (isset($_POST['confirm'])) {
     $run = mysqli_query($con, $query);
     
     $_SESSION['phonenumber'] = $phone;
-    echo "<script>window.open('FarmerProfile.php','_self')</script>";
+    echo "<script>window.open('MyProducts.php','_self')</script>";
 }
 ?>
