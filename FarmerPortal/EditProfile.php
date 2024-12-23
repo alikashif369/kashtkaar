@@ -19,272 +19,242 @@ while ($row = mysqli_fetch_array($run_query)) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Profile</title>
+    <title>Edit Profile - Kashtkaar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&family=Righteous&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #88c057;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: var(--primary-color);
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .profile-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .profile-value {
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--primary-color);
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .profile-value:disabled {
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
+
+        .btn-edit {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 300px;
+            margin: 2rem auto 0;
+            display: block;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-edit:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .profile-icon {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-icon i {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            background: rgba(52, 152, 219, 0.1);
+            padding: 1.5rem;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1rem;
+            }
+
+            .profile-title {
+                font-size: 2rem;
+            }
+
+            .btn-edit {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-icon">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="profile-header">
+                <h1 class="profile-title">Edit Profile</h1>
+            </div>
+            
+            <form action="EditProfile.php" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">Name</label>
+                            <input type="text" class="profile-value" value="<?php echo $name ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">CNIC</label>
+                            <input type="text" class="profile-value" value="<?php echo $cnic ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">Phone Number</label>
+                            <input type="text" class="profile-value" name="phonenumber" value="<?php echo $phone ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">Address</label>
+                            <input type="text" class="profile-value" name="address" value="<?php echo $address ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">State</label>
+                            <select name="statevalue" id="states" class="profile-value" onchange="state()">
+                                <option value="0">--Select Province--</option>
+                                <option value="PUNJAB">PUNJAB</option>
+                                <option value="SINDH">SINDH</option>
+                                <option value="KHYBER PAKHTUNKHWA">KHYBER PAKHTUNKHWA</option>
+                                <option value="BALOCHISTAN">BALOCHISTAN</option>
+                                <option value="ISLAMABAD">ISLAMABAD</option>
+                                <option value="GILGIT-BALTISTAN">GILGIT-BALTISTAN</option>
+                                <option value="AZAD KASHMIR">AZAD KASHMIR</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">District</label>
+                            <select name="district" id="district" class="profile-value">
+                                <option>Select District</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">Bank Account</label>
+                            <input type="number" class="profile-value" name="bank" value="<?php echo $account ?>">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" name="confirm" class="btn-edit">
+                    <i class="fas fa-check-circle mr-2"></i>Confirm
+                </button>
+            </form>
+            <div class="text-center mt-4">
+                <a href="ChangePassword.php" class="btn btn-outline-secondary">
+                    <i class="fas fa-key mr-2"></i>Change Password
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script>
         function state() {
             var a = document.getElementById('states').value;
+            var array = [];
             if (a === 'PUNJAB') {
-                var array = ['Lahore', 'Faisalabad', 'Rawalpindi', 'Gujranwala', 'Multan', 'Sargodha', 'Sialkot', 'Bahawalpur', 'Sheikhupura', 'Rahim Yar Khan'];
+                array = ['Lahore', 'Faisalabad', 'Rawalpindi', 'Gujranwala', 'Multan', 'Sargodha', 'Sialkot', 'Bahawalpur', 'Sheikhupura', 'Rahim Yar Khan'];
             } else if (a === 'SINDH') {
-                var array = ['Karachi', 'Hyderabad', 'Sukkur', 'Larkana', 'Nawabshah', 'Mirpur Khas', 'Jacobabad', 'Shikarpur', 'Khairpur', 'Dadu'];
+                array = ['Karachi', 'Hyderabad', 'Sukkur', 'Larkana', 'Nawabshah', 'Mirpur Khas', 'Jacobabad', 'Shikarpur', 'Khairpur', 'Dadu'];
             } else if (a === 'KHYBER PAKHTUNKHWA') {
-                var array = ['Peshawar', 'Mardan', 'Mingora', 'Kohat', 'Abbottabad', 'Dera Ismail Khan', 'Mansehra', 'Swabi', 'Charsadda', 'Nowshera'];
+                array = ['Peshawar', 'Mardan', 'Mingora', 'Kohat', 'Abbottabad', 'Dera Ismail Khan', 'Mansehra', 'Swabi', 'Charsadda', 'Nowshera'];
             } else if (a === 'BALOCHISTAN') {
-                var array = ['Quetta', 'Khuzdar', 'Turbat', 'Chaman', 'Gwadar', 'Sibi', 'Zhob', 'Dera Murad Jamali', 'Usta Mohammad', 'Loralai'];
+                array = ['Quetta', 'Khuzdar', 'Turbat', 'Chaman', 'Gwadar', 'Sibi', 'Zhob', 'Dera Murad Jamali', 'Usta Mohammad', 'Loralai'];
             } else if (a === 'ISLAMABAD') {
-                var array = ['Islamabad'];
+                array = ['Islamabad'];
             } else if (a === 'GILGIT-BALTISTAN') {
-                var array = ['Gilgit', 'Skardu', 'Hunza', 'Diamer', 'Ghizer', 'Ghanche', 'Astore', 'Nagar'];
+                array = ['Gilgit', 'Skardu', 'Hunza', 'Diamer', 'Ghizer', 'Ghanche', 'Astore', 'Nagar'];
             } else if (a === 'AZAD KASHMIR') {
-                var array = ['Muzaffarabad', 'Mirpur', 'Kotli', 'Rawalakot', 'Bagh', 'Bhimber', 'Pallandri', 'Hattian Bala', 'Haveli'];
+                array = ['Muzaffarabad', 'Mirpur', 'Kotli', 'Rawalakot', 'Bagh', 'Bhimber', 'Pallandri', 'Hattian Bala', 'Haveli'];
             }
 
             var string = "";
             for (let i = 0; i < array.length; i++) {
-                string = string + "<option>" + array[i] + "</option>";
+                string += "<option>" + array[i] + "</option>";
             }
-            string = "<select name='district'>" + string + "</select>";
             document.getElementById('district').innerHTML = string;
         }
     </script>
-
-    <style>
-        h1 {
-            background-color: transparent;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-align: center;
-            cursor: pointer
-        }
-
-        .box {
-            color: rgb(6, 36, 7);
-            width: 350px;
-            line-height: 40px;
-            margin: auto;
-            text-align: center;
-            margin-top: 50px;
-            padding: 5px;
-            border-style: outset;
-            border-width: 5px;
-            border-radius: 16px;
-            border-color: green;
-        }
-
-        body {
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: white;
-            background-image: url(../Images/Website/forgotpassword.jpg);
-            border: chartreuse;
-        }
-
-        form {
-            margin: 10px;
-            padding: 10px;
-            background-color: rgb(247, 248, 247);
-        }
-
-        input {
-            padding: 7px;
-            margin: 10px;
-            border-color: rgb(78, 180, 121);
-            display: inline-block;
-            border-radius: 16px;
-        }
-
-        input[type="submit"] {
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            background-color: green;
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            width: 44%;
-        }
-
-        input[type="submit"]:hover {
-            background-color: rgb(97, 16, 33);
-            outline: none;
-            border-color: blanchedalmond;
-            color: rgb(155, 248, 4);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(155, 248, 4);
-            font-weight: bolder;
-            width: 54%;
-            font-size: 18px;
-        }
-
-        textarea {
-            border-width: 3px;
-            border-radius: 16px;
-            border-color: rgb(78, 180, 121);
-        }
-
-        .in-icons {
-            text-align: center;
-        }
-
-        .in-icons i {
-            position: absolute;
-            left: 600px;
-            top: 175px;
-        }
-
-        .just {
-            float: left;
-            margin-left: 1%;
-            margin: 20px;
-            position: absolute;
-            left: 0;
-            top: 0px;
-            text-shadow: 1px 1px 1px black;
-        }
-
-        .again {
-            cursor: pointer;
-            font-size: 24px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            width: 44%;
-            margin-left: 100px;
-        }
-
-        .say {
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            background-color: green;
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            padding: 10px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .say:hover {
-            background-color: rgb(97, 16, 33);
-            outline: none;
-            border-color: blanchedalmond;
-            color: rgb(155, 248, 4);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(155, 248, 4);
-            font-weight: bolder;
-            width: 94%;
-            font-size: 18px;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
-<body>
-
-    <div class="just">
-        <a href="Homepage.php"> <i class="fa fa-home fa-4x"></i></a>
-    </div>
-
-    <div class="box">
-        <form action="EditProfile.php" method="post">
-            <table align="center">
-                <tr colspan=2>
-                    <h1> EDIT PROFILE</h1>
-                </tr>
-                <tr align="center">
-                    <div class="in-icons">
-                        <td>
-                            <label><b>Name :</b></label>
-                        </td>
-                        <td>
-                            <textarea rows="2" column="18" value="" disabled><?php echo $name; ?></textarea>
-                        </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>CNIC :</b></label>
-                    </td>
-                    <td>
-                        <textarea rows="2" column="20" disabled><?php echo $cnic; ?></textarea>
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>Phone :</b></label>
-                    </td>
-                    <td>
-                        <input type="phonenumber" name="phonenumber" value="<?php echo $phone; ?>" />
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>Address :</b></label>
-                    </td>
-                    <td>
-                        <input type="text" name="address" value="<?php echo $address; ?> " />
-                    </td>
-                </tr>
-
-                <tr align="center">
-                    <td>
-                        <label><b>State :</b></label>
-                    </td>
-                    <td>
-                        <select name="statevalue" id="states" onchange="state()" tabindex="1" style="width:170px;">
-                            <option value="0">--Select Province--</option>
-                            <option value="PUNJAB">PUNJAB</option>
-                            <option value="SINDH">SINDH</option>
-                            <option value="KHYBER PAKHTUNKHWA">KHYBER PAKHTUNKHWA</option>
-                            <option value="BALOCHISTAN">BALOCHISTAN</option>
-                            <option value="ISLAMABAD">ISLAMABAD</option>
-                            <option value="GILGIT-BALTISTAN">GILGIT-BALTISTAN</option>
-                            <option value="AZAD KASHMIR">AZAD KASHMIR</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>District :</b></label>
-                    </td>
-                    <td>
-                        <select name="district" id="district"><option>Select District</option></select>
-                    </td>
-                </tr>
-
-                <tr align="center">
-                    <td>
-                        <label><b>Bank :</b></label>
-                    </td>
-                    <td>
-                        <input type="number" name="bank" value="<?php echo $account; ?>" />
-                    </td>
-                    <span style=" display:block;  margin-bottom: .75em; "></span>
-                </tr>
-                <tr colspan=2>
-                    <td colspan=2>
-                        <input type="submit" name="confirm" value="Confirm">
-                    </td>
-                </tr>
-            </table>
-        </form>
-
-        <div class="again">
-            <a href="ChangePassword.php"><button class="say">Change Password</button></a>
-        </div>
-
-    </div>
-
 </body>
-
 </html>
 
 <?php

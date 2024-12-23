@@ -18,272 +18,161 @@ while ($row = mysqli_fetch_array($run_query)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Change Password</title>
+    <title>Change Password - Kashtkaar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&family=Righteous&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        h1 {
-            background-color: transparent;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-align: center;
-            cursor: pointer
-        }
-
-        .box {
-            color: rgb(6, 36, 7);
-            width: 350px;
-            line-height: 40px;
-            margin: auto;
-            text-align: center;
-            margin-top: 50px;
-            padding: 5px;
-            border-style: outset;
-            border-width: 5px;
-            border-radius: 16px;
-            border-color: green;
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #88c057;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
         }
 
         body {
-            /* background-image: url(Images/Website/FarmerLogin.jpg); */
-            /* background: black; */
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: white;
-            background-image: url(../Images/Website/forgotpassword.jpg);
-            border: chartreuse;
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: var(--primary-color);
         }
 
-        form {
-            margin: 10px;
-            padding: 10px;
-            background-color: rgb(247, 248, 247);
+        .profile-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
         }
 
-        input {
-            padding: 7px;
-            margin: 10px;
-            border-color: rgb(78, 180, 121);
-            display: inline-block;
-            border-radius: 16px;
-        }
-
-        input[type="submit"] {
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            background-color: green;
-            /* display: inline-block; */
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            width: 44%;
-        }
-
-        input[type="submit"]:hover {
-            background-color: rgb(97, 16, 33);
-            outline: none;
-            border-color: blanchedalmond;
-            color: rgb(155, 248, 4);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(155, 248, 4);
-            font-weight: bolder;
-            width: 54%;
-            font-size: 18px;
-        }
-
-        textarea {
-            border-width: 3px;
-            border-radius: 16px;
-            border-color: rgb(78, 180, 121);
-
-
-        }
-
-
-
-
-        .in-icons {
+        .profile-header {
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .in-icons i {
-            position: absolute;
-            left: 600px;
-            top: 175px;
+        .profile-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .just {
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
 
+        .profile-field {
+            margin-bottom: 1.5rem;
+        }
 
-            /* margin-top:2em;  */
-            float: left;
-            margin: 0px;
-            position: absolute;
-            left: 0;
-            top: 0px;
+        .profile-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
 
+        .profile-value {
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--primary-color);
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .profile-value:disabled {
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
+
+        .btn-edit {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 300px;
+            margin: 2rem auto 0;
+            display: block;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-edit:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .profile-icon {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-icon i {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            background: rgba(52, 152, 219, 0.1);
+            padding: 1.5rem;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1rem;
+            }
+
+            .profile-title {
+                font-size: 2rem;
+            }
+
+            .btn-edit {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
-<style>
-    h1 {
-        background-color: transparent;
-        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-        text-align: center;
-        cursor: pointer;
-        /* font-size:20px; */
-    }
-
-    textarea {
-        font-size: 20px;
-        border-radius: 15px;
-        text-align: center;
-        border-color: green;
-        background-color: transparent;
-        margin-top: 10px;
-    }
-
-    .box {
-        color: rgb(6, 36, 7);
-        width: 450px;
-        line-height: 40px;
-        margin: auto;
-        text-align: center;
-        margin-top: 50px;
-        padding: 5px;
-        border-style: outset;
-        /* border-width: 5px;
-            border-radius: 16px; */
-        border-color: green;
-        /* font-size:20px; */
-    }
-
-    body {
-        /* background-image: url(Images/Website/FarmerLogin.jpg); */
-        /* background: black; */
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-color: white;
-        background-image: url(../Images/Website/forgotpassword.jpg);
-        border: chartreuse;
-    }
-
-    form {
-        margin: 10px;
-        padding: 10px;
-        background-color: rgb(247, 248, 247);
-    }
-
-    input {
-        padding: 7px;
-        margin: 10px;
-        border-color: rgb(78, 180, 121);
-        display: inline-block;
-        /* border-radius: 16px; */
-    }
-
-    input[type="submit"] {
-        cursor: pointer;
-        font-size: 22px;
-        font-weight: bold;
-        color: rgb(246, 248, 246);
-        background-color: green;
-        /* display: inline-block; */
-        border-radius: 16px;
-        border-color: rgb(3, 66, 34);
-        width: 64%;
-    }
-
-    input[type="submit"]:hover {
-        background-color: rgb(97, 16, 33);
-        outline: none;
-        border-color: blanchedalmond;
-        color: rgb(155, 248, 4);
-        border-radius: 20%;
-        border-style: outset;
-        border-color: rgb(155, 248, 4);
-        font-weight: bolder;
-        width: 54%;
-        font-size: 18px;
-    }
-
-    .one {
-        height: 100px;
-        border-radius: 13px;
-
-    }
-
-    .two {
-        width: 100px;
-        font-size: 34px;
-        background: transparent;
-        border: 3px;
-        border-color: green;
-        border-style: solid;
-        border-width: 2px;
-
-
-    }
-
-    .just {
-
-        float: left;
-        margin-left: 1%;
-        margin: 20px;
-        position: absolute;
-        left: 0;
-        top: 0px;
-        text-shadow: 1px 1px 1px black;
-    }
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <body>
-    <div class="just">
-        <a href="FarmerHomepage.php"> <i class="fa fa-home fa-4x"></i></a>
-    </div>
-
-    <div class="box">
-        <form action="" method="post">
-            <table align="center">
-                <tr colspan=2>
-                    <h1>CHANGE PASSWORD </h1>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>Current Password :</b></label>
-                    </td>
-                    <td>
-                        <input type="password" name="currentpassword" placeholder="Current Password" /> <br>
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>New Password :</b></label>
-                    </td>
-                    <td>
-                        <input type="password" name="newpassword" placeholder="New Password" /> <br>
-                    </td>
-                </tr>
-                <tr align="center">
-                    <td>
-                        <label><b>Re-enter Password :</b></label>
-                    </td>
-                    <td>
-                        <input type="password" name="confirmpassword" placeholder="Confirm New Password" /> <br>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan=2>
-                        <input type="submit" name="confirm" value="Confirm" /> <br>
-                    </td>
-                    <span style=" display:block;  margin-bottom: .75em; "></span>
-                </tr>
-            </table>
-        </form>
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-icon">
+                <i class="fas fa-key"></i>
+            </div>
+            <div class="profile-header">
+                <h1 class="profile-title">Change Password</h1>
+            </div>
+            
+            <form action="" method="post">
+                <div class="profile-field">
+                    <label class="profile-label">Current Password</label>
+                    <input type="password" class="profile-value" name="currentpassword" placeholder="Current Password" required>
+                </div>
+                <div class="profile-field">
+                    <label class="profile-label">New Password</label>
+                    <input type="password" class="profile-value" name="newpassword" placeholder="New Password" required>
+                </div>
+                <div class="profile-field">
+                    <label class="profile-label">Re-enter Password</label>
+                    <input type="password" class="profile-value" name="confirmpassword" placeholder="Confirm New Password" required>
+                </div>
+                <button type="submit" name="confirm" class="btn-edit">
+                    <i class="fas fa-check-circle mr-2"></i>Confirm
+                </button>
+            </form>
+        </div>
     </div>
 
     <?php

@@ -327,7 +327,7 @@
                             <div class='ratio ratio-16x9'>
                                 <img src='$img_src' 
                                      class='card-img-top object-fit-cover' 
-                                     style='max-height: 180px;' 
+                                     style='max-height: 180px; object-fit: cover;' 
                                      alt='Product image'>
                             </div>
                             <span class='position-absolute top-0 end-0 m-2 $stock_class'>$stock_text</span>

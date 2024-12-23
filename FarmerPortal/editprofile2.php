@@ -1,5 +1,5 @@
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,11 +11,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <a href="https://icons8.com/icon/83325/roman-soldier"></a>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
 </head>
-<body><style>
+<!-- <body><style>
      #staticEmail{
         text-align:center;
          border-style:solid;
@@ -66,8 +66,8 @@
         min-width: 150px !important;
         display: inline-block !important
     }}
-    </style>
-<div class="container" >
+    </style> -->
+<!-- <div class="container" >
     <br>
     <div class="text-center"><h2><b>Edit Profile</h2></b></div>
         <div class="form">
@@ -122,8 +122,8 @@
             </div>  -->
         </div>
         <button type="submit" class="btn text-center d-flex mx-auto btn-lg" style="background-color:#292b2c;color:goldenrod">Confirm</button>
-        <button type="button" class="btn text-center d-flex mx-auto btn-lg mt-4" style="background-color:#292b2c;color:goldenrod">Change Password</button>
+ --        <!-- <button type="button" class="btn text-center d-flex mx-auto btn-lg mt-4" style="background-color:#292b2c;color:goldenrod">Change Password</button>
    <br>
    <button> </div>
-</body>
-</html>
+</body> -->
+</html>>

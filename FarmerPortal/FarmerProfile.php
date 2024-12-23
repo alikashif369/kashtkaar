@@ -17,188 +17,199 @@ while ($row = mysqli_fetch_array($run_query)) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Farmer Profile</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
-     <link rel="stylesheet" href="../portal_files/bootstrap.min.css">
-     <script src="../portal_files/jquery.min.js.download"></script>
-     <script src="../portal_files/popper.min.js.download"></script>
-     <script src="../portal_files/bootstrap.min.js.download"></script>
-
+    <title>Farmer Profile - Kashtkaar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&family=Righteous&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        h1 {
-            background-color: transparent;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-align: center;
-            cursor: pointer;
-            /* font-size:20px; */
-        }
-
-        textarea {
-            font-size: 20px;
-            border-radius: 15px;
-            text-align: center;
-            border-color: green;
-            background-color: transparent;
-            margin-top: 10px;
-        }
-
-        .box {
-            color: rgb(6, 36, 7);
-            width: 450px;
-            line-height: 40px;
-            margin: auto;
-            text-align: center;
-            margin-top: 50px;
-            padding: 5px;
-            border-style: outset;
-            /* border-width: 5px;
-            border-radius: 16px; */
-            border-color: green;
-            /* font-size:20px; */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #88c057;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
         }
 
         body {
-            /* background-image: url(Images/Website/FarmerLogin.jpg); */
-            /* background: black; */
-            /* background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: white;
-            background-image: url(../Images/Website/forgotpassword.jpg); */
-            border: chartreuse;
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: var(--primary-color);
         }
 
-        form {
-            margin: 10px;
-            padding: 10px;
-            background-color: rgb(247, 248, 247);
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
         }
 
-        input {
-            padding: 7px;
-            margin: 10px;
-            border-color: rgb(78, 180, 121);
-            display: inline-block;
-            /* border-radius: 16px; */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
-        input[type="submit"] {
-            cursor: pointer;
-            font-size: 22px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            background-color: green;
-            /* display: inline-block; */
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            width: 64%;
+        .profile-title {
+            font-family: 'Righteous', cursive;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        input[type="submit"]:hover {
-            background-color: rgb(97, 16, 33);
-            outline: none;
-            border-color: blanchedalmond;
-            color: rgb(155, 248, 4);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(155, 248, 4);
-            font-weight: bolder;
-            width: 54%;
-            font-size: 18px;
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
         }
 
-        .one {
-            height: 100px;
-            border-radius: 13px;
-
+        .profile-field {
+            margin-bottom: 1.5rem;
         }
 
-        .two {
-            width: 100px;
-            font-size: 34px;
-            background: transparent;
-            border: 3px;
-            border-color: green;
-            border-style: solid;
-            border-width: 2px;
-
-
+        .profile-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
         }
 
-        .just {
+        .profile-value {
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--primary-color);
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
 
-            float: left;
-            margin-left: 1%;
-            margin: 20px;
-            position: absolute;
-            left: 0;
-            top: 0px;
-            text-shadow: 1px 1px 1px black;
+        .profile-value:disabled {
+            background: #f8f9fa;
+            cursor: not-allowed;
+        }
+
+        .btn-edit, .btn-home {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 300px;
+            margin: 1rem auto 0;
+            display: block;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-edit:hover, .btn-home:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .profile-icon {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-icon i {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            background: rgba(52, 152, 219, 0.1);
+            padding: 1.5rem;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1rem;
+            }
+
+            .profile-title {
+                font-size: 2rem;
+            }
+
+            .btn-edit, .btn-home {
+                width: 100%;
+            }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
 </head>
 
 <body>
-    
-    <div class="container-fluid" style="max-width:520px">
-        <form action="EditProfile.php" method="post">
-            <table align="center">
-                <tr colspan=2>
-                    <h1> FARMER'S PROFILE</h1>
-                </tr>
-                <tr align="center">
-                    <td><label><b>Name :</b></label></td>
-                    <td>
-                        <input type="text" readonly class="form-control-plaintext border border-dark" id="staticEmail" value="<?php echo $name ?>">
-                    <br></td>
-                </tr>
-                <tr align="center">
-                    <td><label><b>Phone Number :</b></label></td>
-                    <td><textarea rows="2" column="10" disabled> <?php echo $phone ?> </textarea><br></td>
-                </tr>
-                <tr align="center">
-                    <td><label><b>Address :</b></label></td>
-                    <td><textarea rows="3" column="56" disabled> <?php echo $address ?> </textarea><br></td>
-                </tr>
-
-                <tr align="center">
-                    <td><label><b>State :</b></label></td>
-                    <td><textarea rows="3" column="56" disabled> <?php echo $state ?> </textarea><br></td>
-                </tr>
-                <tr align="center">
-                    <td><label><b>District :</b></label></td>
-                    <td><textarea rows="3" column="56" disabled> <?php echo $district ?> </textarea><br></td>
-                </tr>
-
-                <tr align="center">
-                    <td><label><b>CNIC Number :</b></label></td>
-                    <td><textarea rows="2" column="10" disabled> <?php echo $cnic ?> </textarea><br></td>
-                </tr>
-                <tr align="center">
-                    <td><label><b>Account Number :</b></label></td>
-                    <td><textarea rows="2" column="10" disabled> <?php echo $bank ?> </textarea><br></td>
-                </tr>
-
-                <td colspan=2><input type="submit" name="editProf" value="Edit Profile"></td>
-                </tr>
-            </table>
-
-
-
-        </form>
-
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-icon">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="profile-header">
+                <h1 class="profile-title">Farmer's Profile</h1>
+            </div>
+            
+            <form action="EditProfile.php" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">Name</label>
+                            <input type="text" class="profile-value" value="<?php echo $name ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">Phone Number</label>
+                            <input type="text" class="profile-value" value="<?php echo $phone ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="profile-field">
+                            <label class="profile-label">Address</label>
+                            <textarea class="profile-value" rows="2" readonly><?php echo $address ?></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">State</label>
+                            <input type="text" class="profile-value" value="<?php echo $state ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">District</label>
+                            <input type="text" class="profile-value" value="<?php echo $district ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">CNIC Number</label>
+                            <input type="text" class="profile-value" value="<?php echo $cnic ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-field">
+                            <label class="profile-label">Account Number</label>
+                            <input type="text" class="profile-value" value="<?php echo $bank ?>" readonly>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" name="editProf" class="btn-edit">
+                    <i class="fas fa-edit mr-2"></i>Edit Profile
+                </button>
+            </form>
+            <a href="farmerHomepage.php" class="btn-home">
+                <i class="fas fa-home mr-2"></i>Home
+            </a>
+        </div>
     </div>
-
 </body>
-
 </html>
