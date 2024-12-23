@@ -4,170 +4,181 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kashtkaar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&family=Righteous&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
     <style>
         :root {
             --primary-color: #2c3e50;
-            --secondary-color: #88c057;
-            --hover-color: #34495e;
+            --secondary-color: #3498db;
+            --accent-color: #88c057;
             --white: #ffffff;
-            --light-gray: #eee;
         }
 
         body {
             margin: 0;
             padding: 0;
-            background: url('Images/Website/image1.webp') no-repeat center center fixed;
-            background-size: cover;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            text-align: center;
             font-family: 'Roboto', sans-serif;
-            color: var(--primary-color);
+            color: var(--white);
             user-select: none;
         }
 
-        .content {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 2rem;
-            border-radius: 10px;
-            backdrop-filter: blur(4px);
+        #vanta-background {
+            position: fixed;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
-        .center-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .content-wrapper {
+            background: rgba(44, 62, 80, 0.85);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 90%;
+            margin: 2rem;
         }
 
-        h1, h2 {
-            margin: 0;
-            margin-right: 40px;
-            margin-bottom: 200px;
-            font-family: 'Playfair Display', serif;
-            font-size: 6rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-shadow: 2px 4px 6px rgba(44, 62, 80, 0.3);
-        }
-
-        h2 {
-            font-size: 2rem;
-            font-weight: 400;
-            margin-bottom: 50px; /* 50px above the title */
+        .brand {
+            font-family: 'Righteous', cursive;
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.1);
         }
 
         .tagline {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 500;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
         }
 
         .description {
-            max-width: 600px;
-            margin: 0 auto 2rem auto;
-            color: var(--primary-color);
             font-size: 1.1rem;
             line-height: 1.6;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .button-container {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-top: 50px; /* 50px below the title */
+            gap: 2rem;
         }
 
         .button {
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            color: var(--primary-color);
-            background-color: var(--white);
-            padding: 0.8rem 2rem;
-            border-radius: 30px;
+            color: var(--white);
+            background-color: transparent;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
             border: 2px solid var(--secondary-color);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .button i {
-            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
 
         .button:hover {
             background-color: var(--secondary-color);
             color: var(--white);
-            box-shadow: 0 8px 15px rgba(136, 192, 87, 0.3);
             transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+            text-decoration: none;
         }
 
-        /* Add animation */
         .fade-in {
-            animation: fadeIn 1.5s ease-in;
+            animation: fadeIn 1.5s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
-            h1, h2 {
-                font-size: 3.5rem;
+            .content-wrapper {
+                padding: 2rem;
+                margin: 1rem;
             }
 
-            h2 {
-                font-size: 1.5rem;
+            .brand {
+                font-size: 3rem;
             }
 
             .tagline {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
 
-            .description {
-                font-size: 1rem;
-                padding: 0 1rem;
+            .button-container {
+                flex-direction: column;
+                gap: 1rem;
             }
 
             .button {
-                font-size: 1rem;
-                padding: 0.6rem 1.5rem;
+                width: 100%;
+                justify-content: center;
             }
-        }
-
-        #magic {
-            position: fixed;
-            width: 100%;
-            height: 100vh;
-            display: block;
-            top: 0;
-            left: 0;
-            z-index: -9999;
         }
     </style>
 </head>
 <body>
-    <div id="magic"></div>
-    <div class="center-container fade-in">
-        <h1>Kashtkaar</h1>
+    <div id="vanta-background"></div>
+    <div class="content-wrapper fade-in">
+        <h1 class="brand">Kashtkaar</h1>
         <div class="tagline">Connecting Farmers to Markets</div>
         <div class="description">
             Welcome to Pakistan's premier agricultural marketplace. Whether you're a farmer looking to sell your produce or a buyer seeking quality agricultural products, Kashtkaar provides a direct and efficient platform for agricultural trade.
         </div>
         <div class="button-container">
             <a href="auth/FarmerLogin.php" class="button">
-                <i class="fas fa-tractor"></i>Farmer Login
+                <i class="fas fa-tractor"></i>
+                Farmer Login
             </a>
             <a href="auth/BuyerLogin.php" class="button">
-                <i class="fas fa-shopping-cart"></i>Buyer Login
+                <i class="fas fa-shopping-cart"></i>
+                Buyer Login
             </a>
         </div>
     </div>
+
+    <script>
+        VANTA.WAVES({
+            el: "#vanta-background",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x3498db,
+            shininess: 30.00,
+            waveHeight: 20.00,
+            waveSpeed: 0.50,
+            zoom: 0.75
+        });
+    </script>
 </body>
 </html>
