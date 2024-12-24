@@ -2,7 +2,6 @@
 include("../Functions/functions.php");
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,318 +9,277 @@ include("../Functions/functions.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buyer - Transactions</title>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <a href="https://icons8.com/icon/83325/roman-soldier"></a>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
-</head>
-<style>
-    body {
-        margin: 0;
-        padding: 0px;
-        font-family: sans-serif;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .table td,
-    .table th {
-        padding: 12px 15px;
-        border: 0px solid #ddd;
-        text-align: center;
-        font-size: 16px;
-    }
-
-    .table th {
-        background-color: #292b2c;
-        color: goldenrod;
-    }
-
-    .table tbody tr:nth-child(even) {
-        background-color: #f5f5f5;
-    }
-
-    .myfooter {
-        background-color: #292b2c;
-
-        color: goldenrod;
-        margin-top: 15px;
-    }
-
-    .aligncenter {
-        text-align: center;
-    }
-
-    a {
-        color: goldenrod;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    nav {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom {
-        background-color: #292b2c;
-    }
-
-    /* change the brand and text color */
-    .navbar-custom .navbar-brand,
-    .navbar-custom .navbar-text {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .navbar-nav .nav-link {
-        background-color: #292b2c;
-    }
-
-    .navbar-custom .nav-item.active .nav-link,
-    .navbar-custom .nav-item:hover .nav-link {
-        background-color: #292b2c;
-    }
-
-
-    .mybtn {
-        border-color: green;
-        border-style: solid;
-    }
-
-
-    .right {
-        display: flex;
-    }
-
-    .left {
-        display: none;
-    }
-
-    .cart {
-        /* margin-left:10px; */
-        margin-right: -9px;
-    }
-
-    .profile {
-        margin-right: 2px;
-
-    }
-
-    .login {
-        margin-right: -2px;
-        margin-top: 12px;
-        display: none;
-    }
-
-    .searchbox {
-        width: 60%;
-    }
-
-    .lists {
-        display: inline-block;
-    }
-
-    .moblists {
-        display: none;
-    }
-
-    .logins {
-        text-align: center;
-        margin-right: -30%;
-        margin-left: 35%;
-    }
-
-    @media only screen and (min-device-width:320px) and (max-device-width:480px) {
-
-        .table thead {
-            display: none;
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --border-color: #e0e0e0;
+            --text-color: #2c3e50;
+            --light-bg: #ffffff;
         }
 
-        .table,
-        .table tbody,
-        .table tr,
-        .table td {
-            display: block;
-            width: 100%;
+        /* Reset and base styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
         }
 
-        .table tr {
-            margin-bottom: 15px;
+        /* Navbar styles */
+        .navbar {
+            background: var(--primary-color) !important;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--accent-color);
         }
 
-        .table td {
-            text-align: right;
-            padding-left: 50%;
-            text-align: right;
-            position: relative;
-        }
-
-        .table td::before {
-            content: attr(data-label);
-            position: absolute;
-            left: 0;
-            width: 50%;
-            padding-left: 15px;
-            font-size: 15px;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        .right {
-            display: none;
-            background-color: #ff5500;
-        }
-
-        /* 
-            .settings{
-            margin-left:79%;
-        } */
-        .left {
+        .navbar-brand {
+            padding: 0;
             display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .moblogo {
-            display: none;
+        .brand-text {
+            font-family: 'Righteous', cursive;
+            font-size: 24px;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
-        .logins {
-            text-align: center;
-            margin-right: 35%;
-            padding: 15px;
+        .navbar-brand img {
+            height: 40px;
+            width: auto;
         }
 
+        /* Navigation links */
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 0.7rem 1rem !important;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: transparent;
+            color: #ffffff !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Search box */
         .searchbox {
-            width: 95%;
-            margin-right: 5%;
-            margin-left: 0%;
+            width: 300px;
+            margin: 0 1rem;
         }
 
-        .moblists {
-            display: inline-block;
+        .searchbox .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+        }
+
+        /* Cart button */
+        .cart-btn {
+            color: white;
+            position: relative;
+            margin-right: 1rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+        }
+
+        .cart-counter {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+            min-width: 20px;
             text-align: center;
-            width: 100%;
         }
 
-        /* .pic{
-        height:auto;
-    } */
+        /* User menu */
+        .user-menu .btn-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            transition: all 0.3s;
+        }
 
-        /* .mobtext{
-        display:none;
-    }
-    .destext{
-        display:inline-block;
-        width:90%;
-        margin-left: 5%;
-        margin-right: 5%;
-    } */
-    }
-</style>
+        .user-menu .dropdown-menu {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Transaction table styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            padding: 1rem;
+        }
+
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Continue shopping button */
+        .btn-shopping {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .btn-shopping:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive fixes */
+        @media (max-width: 768px) {
+            .searchbox {
+                width: 100%;
+                margin: 1rem 0;
+            }
+
+            .navbar-collapse {
+                background: var(--primary-color);
+                padding: 1rem;
+                border-radius: 8px;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
 
 <body>
-
-    <nav class="navbar navbar-expand-xl ">
-
-        <div class=" flex-row-reverse left ">
-
-            <div class="p-2">
-                <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green ;margin-top:2px;">&#61562;</i></a>
-                    <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
-                </div>
-            </div>
-            <div class="p-2 ml-5"><i class='far fa-user-circle' style='font-size:30px; color: green;margin-top:2px;'></i></div>
-            <a class="float-left" href="bhome.php">
-                <img src="agro.png" class="float-left mr-5 ml-0 " alt="Logo" style="height:50px;">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="bhome.php">
+                <img src="kashtkaar_logo.png" alt="Kashtkaar Logo">
+                <span class="brand-text">Kashtkaar</span>
             </a>
-        </div>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="fas fa-bars p-1 " style="color:green;margin-right:-9%;font-size:28px;"></i></span>
-        </button>
-        <a class="float-left" href="bhome.php">
-            <img src="agro.png" class="float-left mr-2 moblogo" alt="Logo" style="height:50px;">
-        </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <div class="input-group mb-1 ml-2 searchbox">
-                <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fas fa-search" style="font-size:20px;color:green; "></i></div>
-                </div>
-                <form action="SearchResult.php" method="get" enctype="multipart/form-data">
-                    <input type="text" class="form-control " id="inlineFormInputGroup" name="search" placeholder="Search for fruits,vegetables or crops " style="width:500px;">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
+                <i class="fas fa-bars text-white"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <form action="SearchResult.php" method="get" class="form-inline ml-auto">
+                    <div class="input-group searchbox">
+                        <input type="text" class="form-control" name="search" placeholder="Search products...">
+                        <div class="input-group-append">
+                            <button class="btn" type="submit">
+                                <i class="fas fa-search text-white"></i>
+                            </button>
+                        </div>
+                    </div>
                 </form>
-            </div>
-            <?php
-            getUsername();
-            ?>
-            <div class="list-group moblists">
 
-                <?php
-                if (isset($_SESSION['phonenumber'])) {
-                    echo "<a href='productsdetails.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Profile</a>";
-                    echo "<a href= 'Transaction.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Transactions</a>";
-                    echo "<a href='saveforlater.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Save For Later</a>";
-                    echo "<a href='#' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Subscriptions</a>";
-                    echo "<a href='farmers.php' class='list-group-item list-group-item-action' style='background-color:#292b2c;text-align:center;color:goldenrod'>Farmers</a>";
-                    echo "<a href='../Includes/logout.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Logout</a>";
-                } else {
-                    echo "<a href='../auth/BuyerLogin.php' class='list-group-item list-group-item-action ' style='background-color:#292b2c;text-align:center;color:goldenrod'>Login</a>";
-                }
-                ?>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="bhome.php">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Transaction.php">
+                            <i class="fas fa-exchange-alt"></i> Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="farmers.php">
+                            <i class="fas fa-users"></i> Farmers
+                        </a>
+                    </li>
+                </ul>
 
-            </div>
-        </div>
+                <a href="CartPage.php" class="cart-btn">
+                    <i class="fas fa-shopping-cart fa-lg"></i>
+                    <span class="cart-counter"><?php echo totalItems(); ?></span>
+                </a>
 
-
-
-
-        <div class=" flex-row-reverse right ">
-            <div class="p-2 cart">
-                <div class="icon2">
-                    <a href="CartPage.php"> <i class="fa" style="font-size:30px; color:green">&#61562;</i></a>
-                    <span id="icon" style="color:green"> <?php echo totalItems(); ?> </span>
+                <div class="user-menu ml-3">
+                    <?php if(isset($_SESSION['phonenumber'])): ?>
+                        <div class="dropdown">
+                            <button class="btn btn-link dropdown-toggle" type="button" id="userMenu" data-toggle="dropdown">
+                                <i class="fas fa-user-circle"></i> <?php getUsername(); ?>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="BuyerProfile.php">My Profile</a>
+                                <a class="dropdown-item" href="Transaction.php">My Orders</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="../Includes/logout.php">Sign Out</a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <a href="../auth/BuyerLogin.php" class="btn btn-outline-light">Login</a>
+                    <?php endif; ?>
                 </div>
             </div>
-            <div class="dropdown p-2 settings ">
-                <button class="btn  dropdown-toggle text-success" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Settings
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <?php
-                    if (isset($_SESSION['phonenumber'])) {
-                        echo "<a href='productsdetails.php' class='dropdown-item  ' style='padding-right:-20px;'>Profile</a>";
-                        echo "<a href='Transaction.php' class='dropdown-item ' style='padding-right:-20px;'>Transactions</a>";
-                        echo "<a href='#' class='dropdown-item'  style='padding-right:-20px;'>Subscriptions</a>";
-                        echo "<a href='saveforlater.php' class='dropdown-item' style='padding-right:-20px;'>Save For Later</a>";
-                        echo "<a href='farmers.php' class='dropdown-item' style='padding-right:-20px;' >Farmers</a>";
-                        echo "<a href='../Includes/logout.php' class='dropdown-item ' style='padding-right:-20px;'>Logout</a>";
-                    } else {
-                        echo "<a href='../auth/BuyerLogin.php' class='dropdown-item ' style='padding-right:-20px;'>Login</a>";
-                    }
-                    ?>
-                </div>
-            </div>
-
-
-            <div class="text-success  login">Login</div>
         </div>
-
     </nav>
+
     <br>
     <div class="container">
         <div class="text-left">
