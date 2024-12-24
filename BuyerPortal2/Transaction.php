@@ -209,6 +209,112 @@ include("../Functions/functions.php");
                 overflow-x: auto;
             }
         }
+
+        /* Footer styles */
+        .myfooter {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section {
+            padding: 0 1rem;
+        }
+
+        .footer-section h5 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-section h5:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 50px;
+            height: 2px;
+            background: #3498db;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #3498db;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            color: #fff;
+        }
+
+        .contact-info {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+
+        .footer-section .contact-info li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section .contact-info li a:hover {
+            color: #3498db;
+            padding-left: 5px;
+        }
     </style>
 </head>
 
@@ -358,45 +464,57 @@ include("../Functions/functions.php");
         </a>
     </div>
 
-
-
-
-
-
-
-    <br><br>
-
-
+    <!-- footer -->
     <section id="footer" class="myfooter">
         <div class="container">
-            <div class="row text-center text-xs-center text-sm-left text-md-left">
-                <div class="col aligncenter">
-                    <br>
-                    <h5>Payment Option</h5>
-                    <img src="../Images/Website/paytm1.jpg" alt="paytm">
-                    <img src="../Images/Website/cod.jpg" alt="paytm" style="height:37px">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>About Kashtkaar</h5>
+                    <p>Empowering farmers through technology to connect directly with buyers and achieve better prices for their produce.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
-                    <ul class="list-unstyled list-inline social text-center">
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
-                        <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                
+                <div class="footer-section">
+                    <h5>Quick Links</h5>
+                    <ul class="contact-info">
+                        <li><a href="bhome.php">Home</a></li>
+                        <li><a href="Transaction.php">Transactions</a></li>
+                        <li><a href="saveforlater.php">Save For Later</a></li>
+                        <li><a href="farmers.php">Farmers</a></li>
                     </ul>
                 </div>
-                </hr>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center">
-                    <p><u><a href="https://www.agrocraft.com/">AgroCraft Corporation</a></u> is a Multitrading Company for farmers ang traders</p>
-                    <p class="h6">Copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Agrotech</a></p>
+                
+                <div class="footer-section">
+                    <h5>Contact Us</h5>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            +92 123 456 7890
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            support@kashtkaar.pk
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            Islamabad, Pakistan
+                        </li>
+                    </ul>
                 </div>
-                </hr>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>
+                    Copyright &copy; 2024 <a href="#">Kashtkaar</a>. All rights reserved.
+                </p>
             </div>
         </div>
+    </section>
+    <!-- ./Footer -->
 </body>
-
 </html>
