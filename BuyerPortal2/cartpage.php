@@ -26,20 +26,60 @@
                     e.preventDefault();
                     var productId = $(this).data("id");
                     var action = $(this).data("action");
+                    var currentQty = parseInt($("#qty-" + productId).val());
+                    var newQty;
+
+                    if (action === "increase") {
+                        newQty = currentQty + 1;
+                    } else if (action === "decrease") {
+                        newQty = currentQty - 1;
+                        if (newQty < 1) {
+                            newQty = 1;
+                            return;
+                        }
+                    }
+
+                    $("#qty-" + productId).val(newQty);
+
+                    // Calculate new subtotal
+                    var unitPrice = parseFloat($(this).closest('tr').find('td:nth-child(3)').text());
+                    var newSubtotal = unitPrice * newQty;
+                    $("#subtotal-" + productId).text(newSubtotal.toFixed(2));
+
+                    // Update grand total
+                    var grandTotal = 0;
+                    $('[id^="subtotal-"]').each(function() {
+                        grandTotal += parseFloat($(this).text());
+                    });
+                    $(".grand-total").text("Total: Rs " + grandTotal.toFixed(2));
+
+                    // Update database
                     $.ajax({
                         url: "updateQuantity.php",
                         method: "POST",
-                        data: { product_id: productId, action: action },
+                        data: {
+                            product_id: productId,
+                            qty: newQty,
+                            subtotal: newSubtotal
+                        },
                         success: function(response) {
-                            // Update the quantity and subtotal without reloading the page
-                            var data = JSON.parse(response);
-                            if (data.error) {
-                                alert(data.error);
-                            } else {
-                                $("#qty-" + productId).val(data.qty);
-                                $("#subtotal-" + productId).text(data.subtotal);
-                                $("#grandtotal").text("Grand total = Rs " + data.grandtotal);
+                            try {
+                                var data = JSON.parse(response);
+                                if (data.error) {
+                                    alert(data.error);
+                                    // Revert changes if there's an error
+                                    $("#qty-" + productId).val(currentQty);
+                                    location.reload();
+                                }
+                            } catch (e) {
+                                console.log("Error parsing response:", e);
                             }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Ajax error:", error);
+                            // Revert changes on error
+                            $("#qty-" + productId).val(currentQty);
+                            location.reload();
                         }
                     });
                 });
