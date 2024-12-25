@@ -655,6 +655,155 @@ include("../Functions/functions.php");
                color: #3498db;
                padding-left: 5px;
           }
+
+          /* Add new styles for category page */
+          .category-filters {
+               background: white;
+               border-radius: 10px;
+               box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+               padding: 20px;
+               margin-bottom: 30px;
+          }
+
+          .filter-heading {
+               color: var(--primary-color);
+               font-size: 1.2rem;
+               font-weight: 600;
+               margin-bottom: 15px;
+          }
+
+          .region-select {
+               width: 100%;
+               padding: 10px 15px;
+               border: 2px solid var(--border-color);
+               border-radius: 8px;
+               font-size: 0.9rem;
+               transition: all 0.3s ease;
+               background: white;
+          }
+
+          .region-select:focus {
+               border-color: var(--accent-color);
+               box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+          }
+
+          .product-grid {
+               display: grid;
+               grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+               gap: 25px;
+               padding: 20px 0;
+          }
+
+          .product-card {
+               background: white;
+               border-radius: 12px;
+               box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+               overflow: hidden;
+               transition: transform 0.3s ease;
+          }
+
+          .product-card:hover {
+               transform: translateY(-5px);
+          }
+
+          .product-image {
+               height: 200px;
+               width: 100%;
+               object-fit: cover;
+          }
+
+          .product-details {
+               padding: 20px;
+          }
+
+          .product-title {
+               font-size: 1.1rem;
+               font-weight: 600;
+               color: var(--text-color);
+               margin-bottom: 10px;
+          }
+
+          .product-meta {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               margin-bottom: 15px;
+          }
+
+          .price {
+               font-size: 1.2rem;
+               font-weight: 700;
+               color: var(--accent-color);
+          }
+
+          .stock-badge {
+               padding: 5px 10px;
+               border-radius: 20px;
+               font-size: 0.8rem;
+               font-weight: 500;
+          }
+
+          .stock-badge.in-stock {
+               background: #27ae60;
+               color: white;
+          }
+
+          .stock-badge.low-stock {
+               background: #e67e22;
+               color: white;
+          }
+
+          .farmer-info {
+               display: flex;
+               align-items: center;
+               gap: 10px;
+               margin-bottom: 15px;
+               padding: 10px;
+               background: #f8f9fa;
+               border-radius: 8px;
+          }
+
+          .farmer-avatar {
+               width: 40px;
+               height: 40px;
+               border-radius: 50%;
+               object-fit: cover;
+          }
+
+          .category-buttons {
+               display: flex;
+               gap: 15px;
+               margin-bottom: 20px;
+          }
+
+          .category-btn {
+               padding: 10px 20px;
+               border: none;
+               border-radius: 8px;
+               background: var(--primary-color);
+               color: white;
+               font-weight: 500;
+               transition: all 0.3s ease;
+          }
+
+          .category-btn:hover {
+               background: var(--accent-color);
+          }
+
+          .filter-btn {
+               background: var(--accent-color);
+               color: white;
+               border: none;
+               padding: 10px 25px;
+               border-radius: 8px;
+               font-weight: 500;
+               transition: all 0.3s ease;
+          }
+
+          .filter-btn:hover {
+               background: #2980b9;
+               transform: translateY(-2px);
+          }
      </style>
 </head>
 
@@ -726,100 +875,170 @@ include("../Functions/functions.php");
         </div>
     </nav>
 
-     <div class="container">
-          <div class="d-flex justify-content-around bg-white mb-3">
-
-               <div class="p-2 ">
+    <div class="container py-4">
+    <!-- Category Filter Section -->
+    <div class="category-filters mb-4">
+        <div class="row">
+            <!-- Category Buttons -->
+            <div class="col-12 mb-4">
+                <div class="d-flex flex-wrap gap-3">
+                    <div class="dropdown me-2">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            <i class="fas fa-apple-alt"></i> Fruits
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php getFruits(); ?>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown me-2">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown">
+                            <i class="fas fa-carrot"></i> Vegetables
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php getVegetables(); ?>
+                        </div>
+                    </div>
+                    
                     <div class="dropdown">
-                         <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Fruits
-                         </button>
-                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <?php
-                              getFruits();
-                              ?>
-                         </div>
+                        <button class="btn btn-outline-warning dropdown-toggle" type="button" data-toggle="dropdown">
+                            <i class="fas fa-wheat"></i> Crops
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php getCrops(); ?>
+                        </div>
                     </div>
-               </div>
-               <div class="p-2">
-                    <div class="dropdown">
-                         <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Vegetables
-                         </button>
-                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <?php
-                              getVegetables();
-                              ?>
-                         </div>
+                </div>
+            </div>
+
+            <!-- Region Filter -->
+            <div class="col-12">
+                <form action="" method="post">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-5">
+                            <select class="form-select form-control" id="states" name="stateInput" onchange="state()">
+                                <option value="0">Select State</option>
+                                <option value="PUNJAB">Punjab</option>
+                                <option value="SINDH">Sindh</option>
+                                <option value="KHYBER PAKHTUNKHWA">Khyber Pakhtunkhwa</option>
+                                <option value="BALOCHISTAN">Balochistan</option>
+                                <option value="ISLAMABAD">Islamabad Capital Territory</option>
+                                <option value="GILGIT-BALTISTAN">Gilgit-Baltistan</option>
+                                <option value="AZAD KASHMIR">Azad Jammu and Kashmir</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <select class="form-select form-control" name="districtInput" id="districts">
+                                <option>Select District</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <button class="btn btn-primary w-100" name="go" type="submit">
+                                <i class="fas fa-filter me-2"></i>Filter
+                            </button>
+                        </div>
                     </div>
-               </div>
-               <div class="p-2 ">
-                    <div class="dropdown">
-                         <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Crops
-                         </button>
-                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <?php
-                              getCrops();
-                              ?>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
+    <!-- Add some CSS to fix the styling -->
+    <style>
+        .category-filters {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .gap-3 {
+            gap: 1rem !important;
+        }
+        
+        .dropdown-menu {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .form-select {
+            height: 38px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+        
+        @media (max-width: 768px) {
+            .dropdown {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            
+            .dropdown button {
+                width: 100%;
+            }
+            
+            .form-select {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 
+    <!-- Products Grid -->
+    <div class="product-grid">
+            <?php
+            cart();
+            if (isset($_GET['type'])) {
+                $search_query = $_GET['type'];
+                $get_pro = "select * from products where product_type = '$search_query'";
+                $run_pro = mysqli_query($con, $get_pro);
+                
+                while ($rows = mysqli_fetch_array($run_pro)) {
+                    $product_id = $rows['product_id'];
+                    $product_title = $rows['product_title'];
+                    $product_image = $rows['product_image'];
+                    $product_price = $rows['product_price'];
+                    $product_delivery = $rows['product_delivery'];
+                    $product_stock = $rows['product_stock'];
+                    $farmer_fk = $rows['farmer_fk'];
+                    
+                    // Get farmer name
+                    $farmer_query = mysqli_query($con, "SELECT farmer_name FROM farmerregistration WHERE farmer_id = $farmer_fk");
+                    $farmer_name = mysqli_fetch_array($farmer_query)['farmer_name'];
 
+                    echo "
+                    <div class='product-card'>
+                        <img src='../Admin/product_images/$product_image' class='product-image' alt='$product_title'>
+                        <div class='product-details'>
+                            <div class='farmer-info'>
+                                <img src='../Images/default_avatar.png' class='farmer-avatar' alt='Farmer'>
+                                <span>$farmer_name</span>
+                            </div>
+                            <h5 class='product-title'>$product_title</h5>
+                            <div class='product-meta'>
+                                <span class='price'>₨ $product_price/kg</span>
+                                <span class='stock-badge " . ($product_stock < 10 ? 'low-stock' : 'in-stock') . "'>
+                                    $product_stock kgs left
+                                </span>
+                            </div>
+                            <form action='' method='post'>
+                                <div class='d-grid gap-2'>
+                                    <a href='ProductDetails.php?id=$product_id' class='btn btn-outline-primary'>
+                                        View Details
+                                    </a>
+                                    <button name='cart' type='submit' class='btn btn-primary'>
+                                        <i class='fas fa-cart-plus me-2'></i>Add to Cart
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>";
+                }
+            }
+            ?>
+        </div>
+    </div>
 
-
-
-     <form action="" method="post">
-          <div class="container">
-               <div class="row   p-2">
-                    <div class="col-12 col-xl-3 col-lg-3 col-md-12 col-sm-12">
-                         <div class="text-center">
-                              <h4 class="font-weight-bold
-                              " style="color: #FFD700 ">Select your region</h4>
-                         </div>
-                    </div>
-                    <div class="col-6 col-xl-3 col-lg-3 col-md-6 col-sm-6 p-0 States">
-
-                         <select class="p-2 shadow-lg" id="states" name="stateInput" onchange="state()" tabindex="1" style="border-radius: 6px; margin-right:  200px; border-color:#FFD700 ">
-                              <option value="0">Select State</option>
-                              <option value="PUNJAB">Punjab</option>
-                              <option value="SINDH">Sindh</option>
-                              <option value="KHYBER PAKHTUNKHWA">Khyber Pakhtunkhwa</option>
-                              <option value="BALOCHISTAN">Balochistan</option>
-                              <option value="ISLAMABAD">Islamabad Capital Territory</option>
-                              <option value="GILGIT-BALTISTAN">Gilgit-Baltistan</option>
-                              <option value="AZAD KASHMIR">Azad Jammu and Kashmir</option>
-                         </select>
-                    </div>
-                    <div class="col-6 col-xl-3 col-lg-3 col-md-6 col-sm-6 districts">
-                         <!-- <div class="dropdown">
-                         <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <b>Districts</b>
-                         </button>
-                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Patato</a>
-                              <a class="dropdown-item" href="#">Carrot</a>
-                              <a class="dropdown-item" href="#">Onion</a>
-                         </div>
-                    </div> -->
-                         <select class="p-2 ml-5 shadow-lg" name="districtInput" id="districts" style="border-radius: 6px; border-color: #FFD700 ">
-                              <option>Select District</option>
-                         </select>
-
-                    </div>
-                    <div class="col-12 col-xl-3 col-lg-3 col-md-12 col-sm-12 go">
-                         <button class='btn btn-border-secondary mx-5 ' name='go' type='submit' style='color:black ;float:right;font-weight:50px; background-color: black;color:#FFD700'>Filter</button>
-                    </div>
-               </div>
-
-          </div>
-          </div>
-     </form>
-     <?php
+    <?php
      if (isset($_POST['go'])) {
           $districtInput = $_POST['districtInput'];
           $stateInput = $_POST['stateInput'];
@@ -836,132 +1055,7 @@ include("../Functions/functions.php");
 
      ?>
 
-
-
-
-
-     <div class="container">
-          <br>
-          <div class="row">
-
-
-               <?php
-               cart();
-               ?>
-               <?php
-               if (isset($_GET['type'])) {
-
-                    $search_query = $_GET['type'];
-                    $get_pro = "select * from products where product_type = '$search_query'";
-                    $run_pro = mysqli_query($con, $get_pro);
-                    // $count = mysqli_num_rows($run_pro);
-                    if ($run_pro) {
-                         echo "<br>";
-                         while ($rows = mysqli_fetch_array($run_pro)) {
-                              $product_id = $rows['product_id'];
-                              $product_title = $rows['product_title'];
-                              $product_image = $rows['product_image'];
-                              $product_price = $rows['product_price'];
-                              $product_delivery = $rows['product_delivery'];
-                              $product_stock = $rows['product_stock']; // Fetch product stock
-                              $farmer_fk = $rows['farmer_fk'];
-                              $farmer_name_query = "select farmer_name from farmerregistration where farmer_id = $farmer_fk";
-                              $running_query_name = mysqli_query($con, $farmer_name_query);
-                              while ($names = mysqli_fetch_array($running_query_name)) {
-                                   $name = $names['farmer_name'];
-                              }
-
-                              if ($product_delivery == "yes") {
-                                   $product_delivery = "Delivery by Farmer";
-                              } else {
-                                   $product_delivery = "Delivery by Farmer Not Available";
-                              }
-                              echo "
-                    <div class='col col-12 col-sm-12 col-md-4 col-xl-4 col-lg-4'>
-                <div class='card pb-1 pl-1 pr-1 pt-0' style='height:542px'>
-                    <br>
-                    <div class='mt-0'><b>
-                            <h4><img src='iconsmall.png' style='width: 28px; margin-bottom:  10px;'> $name
-                        </b></h4>
-                    </div>
-                    <a href='../BuyerPortal2/ProductDetails.php?id=$product_id'>
-                        <img class='card-img-top' src='../Admin/product_images/$product_image' alt='Card image cap' height='300px'>
-                    </a>
-                    <form action = '' method = 'post'>
-                    <div class='card-body pb-0'>
-                        <div class='row'>
-                            <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'>
-                                <div class='input-group mb'>
-                                    <div class='input-group-prepend'>
-                        <li>
-                                        <h5 class='card-title font-weight-bold'>$product_title</h5>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'>
-                                <div class='input-group mb-1'>
-                                    <div class='input-group-prepend'>
-                                        <span class='input-group-text bg-warning border-secondary p-1' style='color:black;' id='inputGroup-sizing-default'><b>Quantity: $product_stock</b></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class='card-text mb-2 font-weight-bold'>PRICE:- $product_price Rs/kg</p>
-                        <div class='row'>
-                            <div class='col-1 col-xl-3 col-lg-2 col-md-2 col-sm-2'></div>
-                            <div class='col-12 col-xl-6 col-lg-6 col-md-6  col-sm-12'>
-                              <button class='btn btn-warning border-secondary mr-1 ' name='cart' type = 'submit' style='color:black ;font-weight:50px;'>Add to cart<img src='carticons.png' height='20px'></button>
-                            </div>
-                        </div>
-                    </div>
-                       </form>
-                </div>
-            </div>
-           ";
-                              if (isset($_POST['cart'])) {
-
-                                   if (isset($_POST['quantity'])) {
-                                        $qty = $_POST['quantity'];
-                                   } else {
-                                        $qty = 1;
-                                   }
-                                   global $con;
-                                   if (isset($_SESSION['phonenumber'])) {
-                                        $sess_phone_number = $_SESSION['phonenumber'];
-
-                                        $check_pro = "select * from cart where phonenumber = $sess_phone_number and product_id='$product_id' ";
-
-                                        $run_check = mysqli_query($con, $check_pro);
-
-                                        if (mysqli_num_rows($run_check) > 0) {
-                                             echo "";
-                                        } else {
-                                             $subtotal = $product_price * $qty;
-                                             $insert_pro = "insert into cart (product_id,phonenumber,qty,subtotal) values ('$product_id','$sess_phone_number','$qty','$subtotal')";
-                                             $run_insert_pro = mysqli_query($con, $insert_pro);
-                                             echo "<script>window.location.reload(true)</script>";
-                                        }
-                                   } else {
-                                        echo "<script>window.alert('Please Login First!');</script>";
-                                   }
-                              }
-                         }
-                    } else {
-                         echo "<br><br><hr><h1 align = center>Product's Not Available !</h1><br><br><hr>";
-                    }
-               }
-               ?>
-          </div>
-          <br><br>
-
-
-     </div>
-     </div>
-
-
-
-     <!-- footer -->
+    <!-- footer -->
     <section id="footer" class="myfooter">
         <div class="container">
             <div class="footer-content">
@@ -1014,4 +1108,4 @@ include("../Functions/functions.php");
     </section>
     <!-- ./Footer -->
 </body>
-</html>
+</html></div>

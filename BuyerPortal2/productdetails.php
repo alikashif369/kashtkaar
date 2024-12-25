@@ -564,130 +564,103 @@ include("../Functions/functions.php");
     </nav>
 
     <?php
-
     if (isset($_GET['id'])) {
         global $con;
-        $product_id  = $_GET['id'];
-        $query = "select * from products where product_id = $product_id";
+        $product_id = $_GET['id'];
+        $query = "SELECT p.*, f.* FROM products p 
+                 JOIN farmerregistration f ON p.farmer_fk = f.farmer_id 
+                 WHERE p.product_id = $product_id";
         $run_query = mysqli_query($con, $query);
-        echo "<br>";
-        while ($rows = mysqli_fetch_array($run_query)) {
-            $farmer_fk = $rows['farmer_fk'];
-            $product_title = $rows['product_title'];
-            $product_image = $rows['product_image'];
-            $product_price = $rows['product_price'];
-            $product_stock = $rows['product_stock'];
-            $product_type = $rows['product_type'];
-            $product_delivery = $rows['product_delivery'];
-            $product_desc = $rows['product_desc'];
-            if ($product_delivery == "yes") {
-                $product_delivery = "Delivery by Farmer";
-            } else {
-                $product_delivery = "Delivery by Farmer Not Available";
-            }
-            $querya = "select * from farmerregistration where farmer_id = $farmer_fk";
-            $runa_query = mysqli_query($con, $querya);
+        
+        if ($row = mysqli_fetch_array($run_query)) {
+            $product_title = $row['product_title'];
+            $product_image = $row['product_image'];
+            $product_price = $row['product_price'];
+            $product_stock = $row['product_stock'];
+            $product_type = $row['product_type'];
+            $product_delivery = $row['product_delivery'] == "yes" ? "Delivery Available" : "No Delivery";
+            $product_desc = $row['product_desc'];
+            $farmer_name = $row['farmer_name'];
+            $farmer_phone = $row['farmer_phone'];
+            $farmer_address = $row['farmer_address'];
+            $farmer_state = $row['farmer_state'];
+            $farmer_district = $row['farmer_district'];
 
-            while ($rows = mysqli_fetch_array($runa_query)) {
-                $name = $rows['farmer_name'];
-                $phone = $rows['farmer_phone'];
-                $address = $rows['farmer_address'];
-                $state = $rows['farmer_state'];
-                $district = $rows['farmer_district'];
+            echo "
+            <div class='container py-5'>
+                <div class='card shadow-lg'>
+                    <div class='row g-0'>
+                        <!-- Product Image Section -->
+                        <div class='col-md-6'>
+                            <div class='position-relative'>
+                                <img src='../Admin/product_images/$product_image' 
+                                     class='img-fluid rounded-start' 
+                                     alt='$product_title'
+                                     style='width: 100%; height: 400px; object-fit: cover;'>
+                                <span class='badge bg-" . ($product_stock > 0 ? "success" : "danger") . " position-absolute top-0 end-0 m-3'>
+                                    " . ($product_stock > 0 ? "In Stock" : "Out of Stock") . "
+                                </span>
+                            </div>
+                        </div>
 
-
-                echo "
-                <div class='container'>
-                    <div class='text-center'>
-                        <br>
-                        <h1 id='headings' class='font-weight-bold'>$product_title</h1>
-                    </div>
-                    <br>
-
-
-                    <div class='row'>
-                        <div class='col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12   imageblock border border-dark'> <img src='../Admin/product_images/$product_image' class='d-flex mx-auto btn-dark image' height='290px;' width='380px;'><br>
-                            <b>
-                                <div class='text-center'>
-                                    <h2>$product_type</h2>
-                                    <br>
+                        <!-- Product Details Section -->
+                        <div class='col-md-6'>
+                            <div class='card-body p-4'>
+                                <h2 class='card-title mb-3'>$product_title</h2>
+                                <div class='mb-4'>
+                                    <span class='badge bg-primary me-2'>$product_type</span>
+                                    <span class='badge bg-info'>$product_delivery</span>
                                 </div>
-                            </b></div>
 
-                        <div class='col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12 block border border-dark'>
-                            <div class='text-center mt-2 ''>
-                            
-                                <br>
-                                <div class='row'>
-                                    <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12 price'>
-                                        <h5><b>Price : </b>$product_price /kg</h5>
-
-                                    </div>
-                                    <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12 stock'>
-                                        <h5><b>Stock : </b>$product_stock kgs</h5>
-                                    </div>
+                                <div class='d-flex justify-content-between align-items-center mb-4'>
+                                    <h3 class='text-primary mb-0'>₨ $product_price/kg</h3>
+                                    <span class='text-muted'>Stock: $product_stock kgs</span>
                                 </div>
-                                <form actions='' method='post'>
-                                    <div class='text-center'>
-                                        <div class='input-group mb-3 wholequantity'>
-                                            <div class='input-group-prepend quantity'>
-                                                <span class='input-group-text bg-warning border-secondary quantitylabel' style='color:black' id='inputGroup-sizing-default' ><b>Quantity </b><i class='fas fa-shopping-bag'></i></span>
-                                            </div>
-                                            <input type='number' name='qty' placeholder=1 class='form-control quantitynumber' aria-label='Default' aria-describedby='inputGroup-sizing-default'>
-                                        </div>
-                                    </div>
-                                    <div class='row'>
-                                        <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'> 
-                                            <button name='cart' type='submit' class='btn btn-warning border-secondary addtocart' style='color:black'><b>Add to cart</b><i class='fa' style='font-size:17px; '>&#61562;</i></button>
-                                        </div>
-                                        <!-- <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'> <a href='#' class='btn btn-warning border-secondary saveforlater' style='color:black'><b>Save For later</b><img src='saveforlater4.png' class='ml-1 mb-1'></a></div> -->
+
+                                <form method='post' class='mb-4'>
+                                    <div class='input-group mb-3'>
+                                        <span class='input-group-text bg-warning'>
+                                            <i class='fas fa-shopping-bag'></i>
+                                        </span>
+                                        <input type='number' name='qty' class='form-control' 
+                                               placeholder='Quantity' min='1' max='$product_stock' required>
+                                        <button name='cart' class='btn btn-warning' type='submit'>
+                                            <i class='fas fa-cart-plus me-2'></i>Add to Cart
+                                        </button>
                                     </div>
                                 </form>
-                                <div class='row text-center ml-4 mt-3'>
-                                    <i class='fa fa-truck fa-2x'></i>
-                                    <h3 style='padding-left:9px;'>$product_delivery</h3>
+
+                                <!-- Farmer Info Card -->
+                                <div class='card bg-light mb-4'>
+                                    <div class='card-body'>
+                                        <h5 class='card-title mb-3'>
+                                            <i class='fas fa-user-circle me-2'></i>Farmer Details
+                                        </h5>
+                                        <p class='mb-2'>
+                                            <i class='fas fa-user me-2'></i>$farmer_name
+                                        </p>
+                                        <p class='mb-2'>
+                                            <i class='fas fa-phone me-2'></i>$farmer_phone
+                                        </p>
+                                        <p class='mb-2'>
+                                            <i class='fas fa-map-marker-alt me-2'></i>$farmer_district, $farmer_state
+                                        </p>
+                                        <button class='btn btn-outline-primary mt-2 w-100'>
+                                            <i class='fas fa-comments me-2'></i>Chat with Farmer
+                                        </button>
+                                    </div>
                                 </div>
-                                  <div class='row text-center ml-4 mt-3'>
-                                   <i class='fas fa-map-marker-alt fa-1x'></i>
-                                    <h5 style='padding-left:9px;'>$district , $state </h5>
+
+                                <!-- Product Description -->
+                                <div class='mt-4'>
+                                    <h5 class='mb-3'>Product Description</h5>
+                                    <p class='card-text'>$product_desc</p>
                                 </div>
-
-                            </div>
-                        </div>
-                        <div class='col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12 text-white' style='background-color:#292b2c;'>
-                            <div class='text-center farmerdetails mt-4 ' style='color:goldenrod'><b>
-                                    <b>
-                                        <h2>Farmer Details
-                                        </h2>
-                                    </b>
-                                </b>
-                            </div>
-                            <div class='details mt-1 text-center'>
-                                <h5><b> Name </b><span style='color:ghostwhite'>: $name</span></h5>
-
-                                <h5><b> Phone Number </b><span style='color:ghostwhite'>:$phone</span></h5>
-                                <br>
-                               <!-- <h4 style='color:goldenrod' class='text-center ''>Have Some Query ?<br></h4> -->
-                                <!-- <a href='BuyerPageFarmerProfile.php' class='btn btn-warning border-secondary  chat' style='color:black;padding:2px;'><b> View Farmer Profile <i class='fas fa-id-card-alt pl-1'></i> </b></a> -->
-
-                                <h4 style='color:goldenrod' class='text-center ''>Have Some Query ?<br></h4>
-                                <a href='#' class='btn btn-warning border-secondary  chat' style='color:black;padding:2px;'><b>CHAT HERE</b><img src='chat2.png' class='ml-1 mb-1'></a>
-
-                                <!-- <b> Address</b> : Lorem ipsum dolor, sit Eum, ad eaque earum voluptates nemo vero possimus, dolor aspernatur ea aut quisquam quas consequuntur distinctio! -->
                             </div>
                         </div>
                     </div>
-
-                    <br><br>
-                    <div class='  description mt-0'><b>
-                            <h2 class='text-center font-weight-bold'>Description</h2>
-                        </b></div>
-                    <br>
-                    <div class='texty' style='margin-top:0%; font-size:25px;'> $product_desc.</div>
-
-                    
-                </div>";
-            }
+                </div>
+            </div>";
         }
     }
 
