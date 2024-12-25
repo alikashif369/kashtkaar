@@ -27,185 +27,197 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Buyer Profile</title>
-    
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
     <style>
-        h1 {
-            background-color: transparent;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-align: center;
-            cursor: pointer;
-            /* font-size:20px; */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-color: #2c3e50;
+            --light-bg: #ffffff;
         }
-        textarea{
-            font-size:20px;
-            border-radius:15px;
-            text-align:center;
-            border-color:green;
-            background-color:transparent;
-        }
-        
-        .box {
-            color: rgb(6, 36, 7);
-            width: 450px;
-            line-height: 40px; 
-            margin: auto;
-            text-align: center;
-            margin-top: 50px;
-            padding: 5px;
-            border-style: outset;
-            border-width: 5px;
-            border-radius: 16px;
-            border-color:rgb(0, 172, 230);
-            /* font-size:20px; */
-        }
-        
+
         body {
-            /* background-image: url(Images/Website/FarmerLogin.jpg); */
-            /* background: black; */
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+                        url(../Images/Website/buyerLogin.jpeg);
             background-size: cover;
-            background-repeat: no-repeat;
             background-position: center;
-            background-color: white;
-            background-image: url(../Images/Website/buyerLogin.jpeg);
-            border: chartreuse;
+            min-height: 100vh;
         }
-        
-        form {
-            margin: 10px;
-            padding: 10px;
-            background-color: rgb(247, 248, 247);
+
+        .profile-nav {
+            background: var(--primary-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        
-        input {
-            padding: 7px;
-            margin: 10px;
-            border-color: rgb(78, 180, 121);
-            display: inline-block;
-            /* border-radius: 16px; */
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
-        
-        input[type="submit"] {
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .profile-header h1 {
+            color: var(--primary-color);
+            font-family: 'Righteous', cursive;
+            margin: 0;
+        }
+
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f8f9fa;
+            font-size: 1rem;
+            resize: none;
+        }
+
+        .edit-btn {
+            grid-column: 1 / -1;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            background-color: rgb(0, 191, 255);
-            border-radius: 16px;
-            border-color: rgb(0, 172, 230);
-            width: 44%;
-        }
-        
-        input[type="submit"]:hover {
-                background-color: rgb(0, 153, 255);
-            outline: none;
-            color:  rgb(255,255,255);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(0, 57, 230);
-            font-weight: bolder;
-            width: 54%;
-            font-size: 18px;
-        }
-        .one{
-            height:100px;
-            border-radius:13px;
-            
-        }
-        .two{
-            width:100px;
-            font-size:34px;
-            background:transparent;
-            border:3px;
-            border-color:green;
-            border-style:solid;
-            border-width:2px;
-        
-            
-        }
-        .just{
-            float:left;
-            margin-left:1%;
-            margin:20px;
-            position:absolute;
-            left:0;
-            top:0px; 
-            text-shadow: 1px 1px 1px black;
+            transition: all 0.3s ease;
         }
 
+        .edit-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
 
-       
+        @media (max-width: 768px) {
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
 </head>
-
 <body>
-    <div class="just">
-        <a href="bhome.php"> <i class="fa fa-home fa-4x"></i></a>
-    </div>
+    <nav class="profile-nav">
+        <div class="nav-content">
+            <a href="bhome.php" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Home</span>
+            </a>
+            <h2 style="color: white; margin: 0;">Profile</h2>
+            <div style="width: 24px;"></div> <!-- Spacer for alignment -->
+        </div>
+    </nav>
 
-    <div class="box">
-        <form action="BuyerEditProfile.php" method="post">
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>BUYER'S PROFILE</h1>
+        </div>
 
-            <table align = "center">
-                <tr colspan = 2>
-                    <h1> BUYER'S  PROFILE</h1>
-                </tr>
+        <form action="BuyerEditProfile.php" method="post" class="profile-form">
+            <div class="form-group">
+                <label>Name</label>
+                <textarea rows="2" disabled><?php echo $name?></textarea>
+            </div>
 
-                <tr align = "center">
-                    <td><label><b>Name :</b></label></td>
-                    <td><textarea rows="2" column="10" disabled> <?php echo $name?> </textarea><br></td>
-                </tr>
+            <div class="form-group">
+                <label>Username</label>
+                <textarea rows="2" disabled><?php echo $user?></textarea>
+            </div>
 
-                <tr align = "center">
-                    <td><label><b>User Name :</b></label></td>
-                    <td><textarea rows="2" column="10" disabled> <?php echo $user?> </textarea><br></td>
-                </tr>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <textarea rows="1" disabled><?php echo $phone?></textarea>
+            </div>
 
-                <tr align = "center">
-                    <td><label><b>Phone Number :</b></label></td>
-                    <td><textarea rows="1" column="10" disabled> <?php echo $phone?> </textarea><br></td>
-                </tr>
-                <tr align = "center">
-                    <td><label><b>Address :</b></label></td>
-                    <td><textarea rows="3" column="56" disabled> <?php echo $address?> </textarea><br></td>
-                </tr>
+            <div class="form-group">
+                <label>Address</label>
+                <textarea rows="3" disabled><?php echo $address?></textarea>
+            </div>
 
-                <tr align = "center">
-                    <td><label><b>CNIC Number :</b></label></td>
-                    <td><textarea rows="2" column="10" disabled> <?php echo $cnic?> </textarea><br></td>
-                </tr>
+            <div class="form-group">
+                <label>CNIC Number</label>
+                <textarea rows="2" disabled><?php echo $cnic?></textarea>
+            </div>
 
-                <tr align = "center">
-                    <td><label><b>Account Number :</b></label></td>
-                    <td><textarea rows="2" column="10"disabled> <?php echo $bank?> </textarea><br></td>
-                </tr>
+            <div class="form-group">
+                <label>Account Number</label>
+                <textarea rows="2" disabled><?php echo $bank?></textarea>
+            </div>
 
-                <tr align = "center">
-                    <td><label><b>Company :</b></label></td>
-                    <td><textarea rows="2" column="10" disabled> <?php echo $comp?> </textarea><br></td>
-                </tr>
+            <div class="form-group">
+                <label>Company</label>
+                <textarea rows="2" disabled><?php echo $comp?></textarea>
+            </div>
 
-                <tr align = "center">
-                    <td><label><b>license :</b></label></td>
-                    <td><textarea rows="2" column="10" disabled> <?php echo $license?> </textarea><br></td>
-                </tr>
+            <div class="form-group">
+                <label>License</label>
+                <textarea rows="2" disabled><?php echo $license?></textarea>
+            </div>
 
-                <tr align = "center">
-                    <td><label><b>Mail ID :</b></label></td>
-                    <td><textarea rows="2" column="10" disabled> <?php echo $mail?> </textarea><br></td>
-                </tr>
-                
-                <tr colspan =2 align = "center">
-                    <td colspan =2><input type = "submit" name="editProf" value= "Edit Profile"></td>
-                </tr>
-            </table>
-            
+            <div class="form-group">
+                <label>Email</label>
+                <textarea rows="2" disabled><?php echo $mail?></textarea>
+            </div>
+
+            <button type="submit" name="editProf" class="edit-btn">
+                <i class="fas fa-edit"></i> Edit Profile
+            </button>
         </form>
- 
     </div>
-
 </body>
 </html>

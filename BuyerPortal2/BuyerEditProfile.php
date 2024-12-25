@@ -8,7 +8,7 @@
     while($row = mysqli_fetch_array($run_query))
     {
         $name = $row['buyer_name'];
-        $pan = $row['buyer_pan'];
+        $cnic = $row['buyer_cnic']; // Changed from pan to cnic
         $phone = $row['buyer_phone'];
         $address = $row['buyer_addr'];
         $account= $row['buyer_bank']; 
@@ -22,284 +22,244 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Password</title>
-
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c587fc1763.js" crossorigin="anonymous"></script>
     <style>
-        h1 {
-            background-color: transparent;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-align: center;
-            cursor: pointer
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-color: #2c3e50;
+            --light-bg: #ffffff;
         }
-        
-        .box {
-            color: rgb(6, 36, 7);
-            width: 450px;
-            line-height: 40px; 
-            margin: auto;
-            text-align: center;
-            margin-top: 50px;
-            padding: 5px;
-            border-style: outset;
-            border-width: 5px;
-            border-radius: 16px;
-            border-color:rgb(0, 172, 230);
-        
-        }
-        
+
         body {
-            /* background-image: url(Images/Website/FarmerLogin.jpg); */
-            /* background: black; */
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+                        url(../Images/Website/buyerLogin.jpeg);
             background-size: cover;
-            background-repeat: no-repeat;
             background-position: center;
-            background-color: white;
-            background-image: url(../Images/Website/buyerLogin.jpeg);
-            border: chartreuse;
+            min-height: 100vh;
         }
-        
-        #innerbox {
-            margin: 10px;
-            padding: 10px;
-            background-color: rgb(247, 248, 247);
+
+        .profile-nav {
+            background: var(--primary-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        
-        input {
-            padding: 7px;
-            margin: 10px;
-             border-color:rgb(0, 172, 230);
-            display: inline-block;
-            border-radius: 16px;
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
-        
-        input[type="submit"] {
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            background-color: rgb(0, 191, 255);
-            border-radius: 16px;
-            border-color: rgb(0, 172, 230);
-            width: 44%;
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
         }
-        
-        input[type="submit"]:hover {
-                background-color: rgb(0, 153, 255);
+
+        .back-btn:hover {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .edit-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        .edit-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .edit-header h1 {
+            color: var(--primary-color);
+            font-family: 'Righteous', cursive;
+            margin: 0;
+        }
+
+        .edit-form {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
             outline: none;
-            color:  rgb(255,255,255);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(0, 57, 230);
-            font-weight: bolder;
-            width: 54%;
-            font-size: 18px;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
-        textarea{
-             border-width: 3px; 
-             border-radius: 16px; 
-             border-color:rgb(0, 172, 230);
-            
-            
+
+        .form-group textarea {
+            resize: none;
+            background: #f8f9fa;
         }
-   
-            
-        .in-icons {
-           text-align: center;
+
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
         }
-            
-        .in-icons i {
-            position: absolute;
-            left: 600px;
-            top: 175px;
-        }
-        .just{
-            float:left;
-            margin:0px;
-            position:absolute;
-            left:0;
-             top:0px; 
-        
-        }
-        .again{
+
+        .btn-submit,
+        .btn-change-password {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 24px; 
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            /* background-color: green; */
-            /* display: inline-block; */
-            border-radius: 16px;
-            border-color: rgb(3, 66, 34);
-            width: 44%;
-            margin-left:100px;
-
-
-        }
-        .say{
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: rgb(246, 248, 246);
-            border-color: rgb(3, 66, 34);
-            width: 96%;
-            padding : 10px;
-            padding-left:10px;
-            padding-right:10px;
-            background-color: rgb(0, 191, 255);
-            border-radius: 16px;
-            border-color: rgb(0, 172, 230);    
+            transition: all 0.3s ease;
         }
 
-        .say:hover{
-            background-color: rgb(0, 153, 255);
-            outline: none;
-            color:  rgb(255,255,255);
-            border-radius: 20%;
-            border-style: outset;
-            border-color: rgb(0, 57, 230);
-            font-weight: bolder;
-            width: 80%;
-            font-size: 18px;
-
+        .btn-submit {
+            background: var(--accent-color);
+            color: white;
         }
-        .just{
-            float:left;
-            margin-left:1%;
-            margin:20px;
-            position:absolute;
-            left:0;
-            top:0px; 
-            text-shadow: 1px 1px 1px black;
+
+        .btn-submit:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
         }
-        </style>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        .btn-change-password {
+            background: #e74c3c;
+            color: white;
+        }
 
-    </head>
+        .btn-change-password:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
 
-    <body>
-    
+        @media (max-width: 768px) {
+            .edit-form {
+                grid-template-columns: 1fr;
+            }
 
-    <div class="just">
-        <a  href="BuyerHomepage.php"> <i  class="fa fa-home fa-4x"></i></a>
-    </div>
-
-
-    <div class="box">
-       <!-- <div id = "innerbox"> -->
-        <form action="" method = "post">
-             <table align = "center" >
-
-                <tr colspan = 2>
-                    <h1> EDIT PROFILE</h1>
-                </tr>
-
-                <tr align = "center">
-                    <div class="in-icons">
-                    <td>
-                        <label><b>Name :</b></label>
-                    </td>
-                    <td>
-                        <textarea rows="2" column="18" value="" disabled><?php echo $name;?></textarea><br>
-                    </td>
-                </tr>
-
-                <tr align = "center">
-                    <td>
-                        <label><b>Pan :</b></label>
-                    </td>
-                    <td>
-                        <textarea rows="2" column="20" disabled><?php echo $pan;?></textarea><br>
-                    </td>
-                </tr>
-
-                <tr align = "center">
-                    <div class="in-icons">
-                    <td>
-                        <label><b>Company :</b></label>
-                    </td>
-                    <td>
-                        <textarea rows="2" column="18" value="" disabled><?php echo $comp;?></textarea><br>
-                    </td>
-                </tr>
-
-                <tr align = "center">
-                    <div class="in-icons">
-                    <td>
-                        <label><b>License :</b></label>
-                    </td>
-                    <td>
-                        <textarea rows="2" column="18" value="" disabled><?php echo $license;?></textarea><br>
-                    </td>
-                </tr>
-
-                <tr align = "center">
-                    <div class="in-icons">
-                    <td>
-                        <label><b>Email ID :</b></label>
-                    </td>
-                    <td>
-                        <textarea rows="2" column="18" value="" disabled><?php echo $mail;?></textarea><br>
-                    </td>
-                </tr>
-
-                <tr align = "center">
-                    <td>
-                    <label><b>Username :</b></label>
-                    </td>
-                    <td>
-                        <input type="text" name="username" value="<?php echo $user; ?>" />  <br> 
-                    </td>
-                    <span style=" display:block;  margin-bottom: .75em; "></span>
-                </tr>
-
-                <tr align = "center">
-                    <td>
-                        <label><b>Phone :</b></label>
-                    </td>
-                    <td>
-                        <input type="phonenumber" name="phonenumber" value="<?php echo $phone;?>"/> <br>
-                    </td>
-                </tr>
-
-                <tr align = "center">
-                    <td>
-                        <label><b>Address :</b></label>
-                    </td>
-                    <td>
-                        <input type="text" name="address" value="<?php echo $address;?> "/> <br>
-                    </td>
-                </tr>
-
-                <tr align = "center">
-                    <td>
-                    <label><b>Bank :</b></label>
-                    </td>
-                    <td>
-                        <input type="number" name="bank" value="<?php echo $account; ?>" />  <br> 
-                    </td>
-                    <span style=" display:block;  margin-bottom: .75em; "></span>
-                </tr>
-
-                <tr colspan =2 align = "center">
-                    <td colspan =2>
-                        <input type="submit" name="confirm" value="Confirm">
-                    </td>
-                </tr>
-            </table>
-        </form>
-        <div class="again">
-            <td colspan =2><a href="BuyerChangePassword.php"><button class="say">Change Password</button></a></td>
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="profile-nav">
+        <div class="nav-content">
+            <a href="BuyerProfile.php" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Profile</span>
+            </a>
+            <h2 style="color: white; margin: 0;">Edit Profile</h2>
+            <div style="width: 24px;"></div>
         </div>
- 
+    </nav>
+
+    <div class="edit-container">
+        <div class="edit-header">
+            <h1>Edit Your Profile</h1>
+        </div>
+
+        <form action="" method="post" class="edit-form">
+            <div class="form-group">
+                <label>Name</label>
+                <textarea rows="2" disabled><?php echo $name?></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>CNIC</label>
+                <textarea rows="2" disabled><?php echo $cnic?></textarea> <!-- Changed from $pan to $cnic -->
+            </div>
+
+            <div class="form-group">
+                <label>Company</label>
+                <textarea rows="2" disabled><?php echo $comp?></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>License</label>
+                <textarea rows="2" disabled><?php echo $license?></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Email ID</label>
+                <textarea rows="2" disabled><?php echo $mail?></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" value="<?php echo $user?>">
+            </div>
+
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" name="phonenumber" value="<?php echo $phone?>">
+            </div>
+
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" name="address" value="<?php echo $address?>">
+            </div>
+
+            <div class="form-group">
+                <label>Bank Account</label>
+                <input type="number" name="bank" value="<?php echo $account?>">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" name="confirm" class="btn-submit">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+                <a href="BuyerChangePassword.php" class="btn-change-password" style="text-decoration: none; text-align: center;">
+                    <i class="fas fa-key"></i> Change Password
+                </a>
+            </div>
+        </form>
     </div>
-  
-
-
 </body>
 </html>
 
