@@ -637,6 +637,179 @@
             padding-left: 5px;
         }
 
+        /* Cart page specific styles */
+        .cart-container {
+            padding: 2rem 0;
+            min-height: calc(100vh - 400px);
+        }
+
+        .cart-header {
+            margin-bottom: 2rem;
+        }
+
+        .cart-header h3 {
+            color: #2c3e50;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .cart-header h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: #3498db;
+        }
+
+        .cart-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .cart-table thead th {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem;
+            font-weight: 500;
+        }
+
+        .cart-table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-name {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #3498db;
+        }
+
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.5rem;
+        }
+
+        .delete-btn {
+            color: #e74c3c;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            color: #c0392b;
+        }
+
+        .cart-actions {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .continue-shopping {
+            background: #2c3e50;
+            color: white;
+            border: none;
+        }
+
+        .continue-shopping:hover {
+            background: #34495e;
+        }
+
+        .empty-cart {
+            background: #e74c3c;
+            color: white;
+            border: none;
+        }
+
+        .empty-cart:hover {
+            background: #c0392b;
+        }
+
+        .checkout-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .grand-total {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .checkout-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background: #219a52;
+        }
+
+        @media (max-width: 768px) {
+            .cart-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .checkout-section {
+                margin-top: 2rem;
+            }
+        }
     </style>
 
     <body>
@@ -707,18 +880,14 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div class="container cart-container">
+            <div class="cart-header">
+                <?php if (isset($_SESSION['phonenumber'])): ?>
+                    <h3>Your Cart (<?php echo totalItems(); ?> items)</h3>
+                <?php endif; ?>
+            </div>
 
-            <?php
-            if (isset($_SESSION['phonenumber'])) {
-                $temp = totalItems();
-                echo   "<div class='text-left'>
-                            <h3>Your Items :- $temp</h3>
-                            <hr>";
-            }
-            ?>
-
-            <table class="table">
+            <table class="table cart-table">
                 <thead>
                     <th>S.No</th>
                     <th>Item Name</th>
@@ -731,10 +900,12 @@
                 <?php
                 $total = 0;
                 global $con;
+                $count = 0; // Initialize $count
                 if (isset($_SESSION['phonenumber'])) {
                     $sess_phone_number = $_SESSION['phonenumber'];
                     $sel_price = "select * from cart where phonenumber = '$sess_phone_number'";
                     $run_price = mysqli_query($con, $sel_price);
+                    $count = mysqli_num_rows($run_price); // Set $count to the number of rows
 
                     $qtycart = array();
                     $i = 0;
@@ -750,15 +921,6 @@
                             $subtotal = $_SESSION['qtycart'][$i] * $product_price;
 
                 ?>
-
-
-
-                            <!-- <td class="tdy" data-label="quantity"><a style="color:black;margin-right:12px;" href="MinusQty.php?id=<?php echo $product_id; ?>"><label class="add ladd"><i style="padding: 4px;" class=" icon left  fas fa-minus">
-                                        </label></a></i>
-                                    <input type="number" oninput="this.value = Math.abs(this.value)" min="1" value='<?php echo $_SESSION['qtycart'][$i]; ?>' name="qty" style="width:40px; "><a style="color:black;margin-left:4px;" href="AddQty.php?id=<?php echo $product_id; ?>"><label class="add radd">
-                                            <i style="padding: 4px;" class="icon right  fas fa-plus"></label></a></i></td>
-                                </td> -->
-
 
                             <tbody>
                                 <tr>
@@ -806,89 +968,32 @@
                             </tbody>
             </table>
 
-        </div>
-
-        </div>
-
-
-        <div class="container">
-            <div class="float-none float-sm-none float-md-none float-lg-left float-xl-left  emptycart">
-                <a href="emptyCart.php">
-                    <button type="button" class="btn btn-lg  border border-dark " style="font-size:22px;color:black;background-color:#FFD700">Empty Cart
-                        <i class="fas fa-shopping-cart ml-1"></i></button>
-                </a>
-            </div>
-            <!-- <div class="grandtotal  float-none float-sm-none float-md-none float-lg-right float-xl-right"></div><br> -->
-            <br>
-            <div class=" float-none float-sm-none float-md-none float-lg-right float-xl-rightcheckout mr-0 p-2 border border-dark  " style="border-radius:5%;">
-
-                <h2 id="grandtotal">Grand total = Rs <?php echo $total; ?> </h2>
-
-
-
-
-                <?php
-                if (isset($_SESSION['phonenumber'])) {
-                    $sel_price = "select * from cart where phonenumber = '$sess_phone_number'";
-                    $run_price = mysqli_query($con, $sel_price);
-                    $count = mysqli_num_rows($run_price);
-                    if ($count > 0) {
-                        echo "<a href='Checkout.php'>
-                                    <button type='button' class='btn btn-lg border border-dark d-flex mx-auto' style='font-size:22px;color:black;background-color:#FFD700'>
-                                        Checkout<i class='fas fa-arrow-right ml-2 mt-2 mb-1'></i>
-                                    </button>
-                                </a>";
-                    } else {
-
-                        echo "<a href='Includes/alert.php'>
-                                    <button type='button' class='btn btn-lg border border-dark d-flex mx-auto' style='font-size:22px;color:black;background-color:#FFD700'>
-                                        Checkout<i class='fas fa-arrow-right ml-2 mt-2 mb-1'></i>
-                                    </button>
-                                </a>";
-                    }
-                } else {
-
-                    echo "<a href='../auth/BuyerLogin.php'>
-                                    <button type='button' class='btn btn-lg border border-dark d-flex mx-auto' style='font-size:22px;color:black;background-color:#FFD700'>
-                                        Checkout<i class='fas fa-arrow-right ml-2 mt-2 mb-1'></i>
-                                    </button>
-                                </a>";
-                }
-
-                ?>
-
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <?php $_SESSION['grandtotal'] = $total; ?>
-            <br>
-            <br>
-            <div class=" float-none float-sm-none float-md-none float-lg-left float-xl-left continueshopping mt-5">
-                <a href="bhome.php"><button type="button" class="btn btn-lg  border border-dark " style="font-size:22px;color:black;background-color:#FFD700">Continue Shopping
-                        <i class="fas fa-shopping-bag ml-1"></i></button></a>
+            <div class="cart-actions">
+                <div>
+                    <a href="bhome.php" class="btn action-btn continue-shopping">
+                        <i class="fas fa-arrow-left"></i> Continue Shopping
+                    </a>
+                    <a href="emptyCart.php" class="btn action-btn empty-cart">
+                        <i class="fas fa-trash"></i> Empty Cart
+                    </a>
+                </div>
+                
+                <div class="checkout-section">
+                    <h2 class="grand-total">Total: Rs <?php echo $total; ?></h2>
+                    <?php if (isset($_SESSION['phonenumber'])): ?>
+                        <a href="<?php echo $count > 0 ? 'Checkout.php' : 'Includes/alert.php'; ?>" 
+                           class="btn checkout-btn">
+                            Proceed to Checkout <i class="fas fa-arrow-right"></i>
+                        </a>
+                    <?php else: ?>
+                        <a href="../auth/BuyerLogin.php" class="btn checkout-btn">
+                            Login to Checkout <i class="fas fa-arrow-right"></i>
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+
         <!-- Footer - exact match with bhome.php -->
         <section id="footer" class="myfooter">
             <div class="container">

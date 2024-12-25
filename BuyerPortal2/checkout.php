@@ -514,6 +514,124 @@ include("../Functions/functions.php");
             color: #3498db;
             padding-left: 5px;
         }
+
+        /* Checkout page specific styles */
+        .checkout-container {
+            padding: 2rem 0;
+            min-height: calc(100vh - 400px);
+        }
+
+        .checkout-header {
+            margin-bottom: 2rem;
+        }
+
+        .checkout-header h3 {
+            color: #2c3e50;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .checkout-header h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: #3498db;
+        }
+
+        .checkout-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .checkout-section h4 {
+            color: #2c3e50;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-section textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            font-size: 1rem;
+            resize: none;
+        }
+
+        .checkout-section select {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .checkout-section .payment-options img {
+            height: 40px;
+            margin-right: 1rem;
+        }
+
+        .checkout-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .place-order-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .place-order-btn:hover {
+            background: #219a52;
+        }
+
+        .go-back-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+        }
+
+        .go-back-btn:hover {
+            background: #34495e;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 
 <body>
@@ -594,122 +712,116 @@ include("../Functions/functions.php");
         }
         ?>
 
-        <div class="container mt-2">
-            <div class="text">
-                <br>
-                <h3 style="font-family:Georgia, 'Times New Roman', Times, serif">Check your address </h3>
+        <div class="container checkout-container">
+            <div class="checkout-header">
+                <h3>Check your address</h3>
             </div>
-            <hr style="margin-top:-0.5%">
-            <form>
-                <div class=" float-none float-sm-none float-md-none float-lg-right float-xl-rightcheckout mr-0 p-2 mb-5   " style="border-radius:5%;">
-                    <h4 style="font-family: sans-serif"><b>Grand total = Rs. <?php echo $_SESSION['grandtotal']; ?> </b></h4>
-                </div>
-                <div class="input-group mt-2 hey ">
-                    <div class="input-group-prepend ">
-                        <span class="input-group-text" style="background-color:#292b2c;color:goldenrod">Delivery Address</span>
-                    </div>
-                    <textarea class="form-control" name="address" aria-label="With textarea"><?php echo $buyer_addr ?></textarea>
-                </div>
-        </div>
-        <div class="container mt-5">
-            <div class="text">
-                <h3 style="font-family:Georgia, 'Times New Roman', Times, serif">Check your Items </h3>
+
+            <div class="checkout-section">
+                <h4>Delivery Address</h4>
+                <textarea name="address" rows="4"><?php echo $buyer_addr ?></textarea>
             </div>
-            <hr style="margin-top:-0.5%">
-            <table class="table">
-                <thead>
-                    <th>Serial No</th>
-                    <th>Name</th>
-                    <th>Total (in Rs)</th>
-                    <th>Delivery options</th>
-                    <!-- <th>Status</th> -->
-                </thead>
+
+            <div class="checkout-header">
+                <h3>Check your Items</h3>
+            </div>
+
+            <div class="checkout-section">
+                <table class="table">
+                    <thead>
+                        <th>Serial No</th>
+                        <th>Name</th>
+                        <th>Total (in Rs)</th>
+                        <th>Delivery options</th>
+                    </thead>
+                    <tbody>
+                        <?php
+
+                        global $con;
+                        if (isset($_SESSION['phonenumber'])) {
+                            $sess_phone_number = $_SESSION['phonenumber'];
+                            $sel_price = "select * from cart where phonenumber = '$sess_phone_number'";
+                            $run_price = mysqli_query($con, $sel_price);
+                            $i = 0;
+
+                            $allproducts = array();
+                            $allqty = array();
+                            $allsubtotal = array();
+                            $allphones = array();
+                            while ($p_price = mysqli_fetch_array($run_price)) {
+                                $product_id = $p_price['product_id'];
+                                $qty = $p_price['qty'];
+                                $subtotal = $p_price['subtotal'];
+                                array_push($allproducts, $product_id);
+                                array_push($allqty, $qty);
+
+                                $pro_price = "select * from products where product_id='$product_id'";
+                                $run_pro_price = mysqli_query($con, $pro_price);
+                                while ($pp_price = mysqli_fetch_array($run_pro_price)) {
+                                    $product_title = $pp_price['product_title'];
+                                    $farmer_fk = $pp_price['farmer_fk'];
+
+                                    $get_phone = "select * from farmerregistration where farmer_id = $farmer_fk";
+                                    $run_get_phone = mysqli_query($con, $get_phone);
+                                    while ($phones = mysqli_fetch_array($run_get_phone)) {
+                                        $phone = $phones['farmer_phone'];
+                                        array_push($allphones, $phone); ?>
 
 
+                                        <tr>
+                                            <td data-label="Sr.No"><?php echo $i + 1; ?></td>
+                                            <td data-label="Name"><?php echo $product_title; ?></td>
+                                            <td data-label="Total (in Rs)"><?php echo $subtotal; ?></td>
+                                            <?php
+                                            array_push($allsubtotal, $subtotal); ?>
+                                            <td data-label=">Delivery options">
+                                                <select class="custom-select custom-select" name="delivery">
+                                                    <option selected value="Farmer">Farmer</option>
+                                                    <option value="Buyer">Buyer</option>
+                                                    <option value="Courier">Courier</option>
+                                                </select>
+                                            </td>
+                                        </tr>
 
-                <?php
-
-                global $con;
-                if (isset($_SESSION['phonenumber'])) {
-                    $sess_phone_number = $_SESSION['phonenumber'];
-                    $sel_price = "select * from cart where phonenumber = '$sess_phone_number'";
-                    $run_price = mysqli_query($con, $sel_price);
-                    $i = 0;
-
-                    $allproducts = array();
-                    $allqty = array();
-                    $allsubtotal = array();
-                    $allphones = array();
-                    while ($p_price = mysqli_fetch_array($run_price)) {
-                        $product_id = $p_price['product_id'];
-                        $qty = $p_price['qty'];
-                        $subtotal = $p_price['subtotal'];
-                        array_push($allproducts, $product_id);
-                        array_push($allqty, $qty);
-
-                        $pro_price = "select * from products where product_id='$product_id'";
-                        $run_pro_price = mysqli_query($con, $pro_price);
-                        while ($pp_price = mysqli_fetch_array($run_pro_price)) {
-                            $product_title = $pp_price['product_title'];
-                            $farmer_fk = $pp_price['farmer_fk'];
-
-                            $get_phone = "select * from farmerregistration where farmer_id = $farmer_fk";
-                            $run_get_phone = mysqli_query($con, $get_phone);
-                            while ($phones = mysqli_fetch_array($run_get_phone)) {
-                                $phone = $phones['farmer_phone'];
-                                array_push($allphones, $phone); ?>
-
-
-                                <tbody>
-                                    <tr>
-                                        <td data-label="Sr.No"><?php echo $i + 1; ?></td>
-                                        <td data-label="Name"><?php echo $product_title; ?></td>
-                                        <td data-label="Total (in Rs)"><?php echo $subtotal; ?></td>
-                                        <?php
-                                        array_push($allsubtotal, $subtotal); ?>
-                                        <td data-label=">Delivery options">
-                                            <select class="custom-select custom-select" name="delivery">
-                                                <option selected value="Farmer">Farmer</option>
-                                                <option value="Buyer">Buyer</option>
-                                                <option value="Courier">Courier</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-                <?php
+                        <?php
+                                    }
+                                }
+                                $i++;
                             }
-                        }
-                        $i++;
-                    }
-                } else {
-                    echo "<h1 align = center>Please Login First!</h1><br><br><hr>";
-                } ?>
-            </table>
-        </div>
-
-        <div class="container mt-5">
-            <div class="text">
-                <h3 style="font-family:Georgia, 'Times New Roman', Times, serif">Select Your Payment Mode</h3>
-            </div>
-            <hr style="margin-top:-0.5%">
-
-            <div class="payment">
-                <h4>Payment Options :-
-                    <input type="radio" aria-label="Radio button for following text input" name="payment" value="paytm" required>
-                    <img src="../Images/Website/paytm1.jpg" alt="paytm" class="paytm">
-                    <input type="radio" aria-label="Radio button for following text input" name="payment" value="cod" required>
-                    <img src="../Images/Website/cod.jpg" alt="paytm" class="cod" style="height:37px">
-                </h4>
+                        } else {
+                            echo "<h1 align = center>Please Login First!</h1><br><br><hr>";
+                        } ?>
+                    </tbody>
+                </table>
             </div>
 
-            <div class="float-none float-sm-none float-md-none float-lg-right float-xl-right placeorder">
-                <a href="#"><button type="submit" name="submit" class="btn btn-lg  border border-dark " style="font-size:22px;color:black;background-color:#FFD700">
-                        Place Order
-                        <i class="fas fa-thumbs-up"></i>
-                    </button>
+            <div class="checkout-header">
+                <h3>Select Your Payment Mode</h3>
+            </div>
+
+            <div class="checkout-section">
+                <h4>Payment Options</h4>
+                <div class="payment-options">
+                    <label>
+                        <input type="radio" name="payment" value="jazz" required>
+                        <img src="../Images/Website/jazz.png" alt="jazz">
+                    </label>
+                    <label>
+                        <input type="radio" name="payment" value="Easypaisa" required>
+                        <img src="../Images/Website/Easypaisa.png" alt="Easypaisa">
+                    </label>
+                </div>
+            </div>
+
+            <div class="checkout-actions">
+                <a href="cartpage.php" class="btn action-btn go-back-btn">
+                    <i class="fas fa-arrow-left"></i> Go Back
                 </a>
+                <button type="submit" name="submit" class="btn action-btn place-order-btn">
+                    Place Order <i class="fas fa-thumbs-up"></i>
+                </button>
             </div>
+        </div>
     </form>
 
 
@@ -800,7 +912,10 @@ if (isset($_POST['submit'])) {
     $clear = "delete from cart where phonenumber = $sess_phone_number";
     $run = mysqli_query($con, $clear);
     if ($run) {
-        echo "<script>window.open('Success.php','_self')</script>";
+        echo "<script>
+                alert('Order placed successfully!');
+                window.location.href = 'bhome.php';
+              </script>";
     }
 }
 ?>
