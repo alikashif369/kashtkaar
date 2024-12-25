@@ -71,6 +71,56 @@
 
             return true;
         }
+
+        // Add this function for geolocation
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        document.getElementById('latitude').value = position.coords.latitude;
+                        document.getElementById('longitude').value = position.coords.longitude;
+                    },
+                    function(error) {
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                alert("Please enable location access to continue registration.");
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                alert("Location information unavailable.");
+                                break;
+                            case error.TIMEOUT:
+                                alert("Location request timed out.");
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                alert("An unknown error occurred.");
+                                break;
+                        }
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Add call to getLocation() in window.onload
+        window.onload = function() {
+            getLocation();
+            VANTA.WAVES({
+                el: "#vanta-background",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x3498db,
+                shininess: 30.00,
+                waveHeight: 20.00,
+                waveSpeed: 0.50,
+                zoom: 0.75
+            });
+        }
     </script>
     <style>
     @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
@@ -606,6 +656,10 @@
                         </div>
                     </div>
 
+                    <!-- Add hidden fields for coordinates -->
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+
                     <!-- Register Button -->
                     <div class="btn-container">
                         <button type="submit" class="btn btn-primary" name="register">
@@ -616,23 +670,6 @@
             </div>
         </div>
     </div>
-    <script>
-        VANTA.WAVES({
-            el: "#vanta-background",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x3498db,
-            shininess: 30.00,
-            waveHeight: 20.00,
-            waveSpeed: 0.50,
-            zoom: 0.75
-        });
-    </script>
 </body>
 
 </html>
@@ -658,6 +695,8 @@ if (isset($_POST['register'])) {
     $confirmpassword = mysqli_real_escape_string($con, $_POST['confirmpassword']);
     $district = mysqli_real_escape_string($con, $_POST['district']);
     $state = mysqli_real_escape_string($con, $_POST['statevalue']);
+    $latitude = mysqli_real_escape_string($con, $_POST['latitude']);
+    $longitude = mysqli_real_escape_string($con, $_POST['longitude']);
 
     $encryption = openssl_encrypt(
         $password,
@@ -678,7 +717,18 @@ if (isset($_POST['register'])) {
                 '$encryption')";
 
         $run_register_query = mysqli_query($con, $query);
-        echo "<script>console.log('SucessFully Inserted');</script>";
+        
+        // Get the last inserted farmer_id
+        $farmer_id = mysqli_insert_id($con);
+        
+        // Insert the location data
+        if ($run_register_query && !empty($latitude) && !empty($longitude)) {
+            $location_query = "INSERT INTO farmer_locations (farmer_id, latitude, longitude) 
+                              VALUES ($farmer_id, $latitude, $longitude)";
+            mysqli_query($con, $location_query);
+        }
+        
+        echo "<script>console.log('Successfully Inserted');</script>";
         echo "<script>window.open('FarmerLogin.php','_self')</script>";
     } else if (strcmp($password, $confirmpassword) != 0) {
         echo "<script>
