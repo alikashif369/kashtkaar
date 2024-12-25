@@ -692,14 +692,15 @@ include("../Functions/functions.php");
                             <i class="fas fa-exchange-alt"></i> Orders
                         </a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="saveforlater.php">
-                            <i class="fas fa-heart"></i> Saved
-                        </a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="farmers.php">
                             <i class="fas fa-users"></i> Farmers
+                        </a>
+                    </li>
+                    <!-- Add new Map link -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="map.php">
+                            <i class="fas fa-map-marker-alt"></i> Find Farmers
                         </a>
                     </li>
                 </ul>
