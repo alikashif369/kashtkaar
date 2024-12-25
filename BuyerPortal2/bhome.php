@@ -778,7 +778,7 @@ include("../Functions/functions.php");
     <!-- Hero Banner -->
     <div class="container mt-4">
         <div class="hero-banner position-relative rounded overflow-hidden">
-            <img src="b4.jpeg" class="w-100" alt="Fresh Produce" style="height: 400px; object-fit: cover;">
+            <img src="img4.jpeg" class="w-100" alt="Fresh Produce" style="height: 400px; object-fit: cover;">
             <div class="position-absolute top-0 left-0 w-100 h-100 d-flex align-items-center" style="background: rgba(0,0,0,0.4);">
                 <div class="container">
                     <div class="row"></div></div>

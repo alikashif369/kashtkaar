@@ -315,6 +315,44 @@ include("../Functions/functions.php");
             color: #3498db;
             padding-left: 5px;
         }
+
+        .btn-shopping {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn-shopping:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(135deg, #2980b9, #2c3e50);
+        }
+
+        .btn-shopping i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-shopping:hover i {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .btn-shopping {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -458,10 +496,12 @@ include("../Functions/functions.php");
                 } ?>
         </table>
         <br><br>
-        <a href="bhome.php">
-            <button type="button" class="btn  btn-lg border border-dark" style="background-color:#FFD700;color:black;">Continue Shopping
-                <i class="fas fa-shopping-bag ml-2" aria-hidden="true"></i></button>
-        </a>
+        <div class="d-flex justify-content-center">
+            <a href="bhome.php" class="btn-shopping">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Continue Shopping
+            </a>
+        </div>
     </div>
 
     <!-- footer -->

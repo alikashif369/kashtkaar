@@ -515,65 +515,66 @@ include("../Functions/functions.php");
             </b>
         </div>
     <div class="container mt-5">
-                </p>
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 ">
-                <div class="card border-dark border" >
-                    <div class="card-body ">
-                        <h5 class="card-title text-center"><img src="iconbig3.png" style=" margin-bottom:  10px;"></h5>
-                        <h4 class="card-subtitle mb-2  text-center">Abhishek</h4>
-                        <p class="card-text text-center">Vashi, Maharashtra<br><br>
-                            <button type="button" class="btn  border-dark border" style="background-color:#FFD700;color:black">View Profile </button>
-                        </p>
-                        <!-- <a href="#" class="card-link text-center">Card link</a>
-                      <a href="#" class="card-link text-center">Another link</a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 ">
-                <div class="card border-dark border" >
-                    <div class="card-body ">
-                        <h5 class="card-title text-center"><img src="iconbig.png" style=" margin-bottom:  10px;"></h5>
-                        <h4 class="card-subtitle mb-2  text-center">Ansh</h4>
-                        <p class="card-text text-center">Kopar, Maharashtra<br><br>
-                            <button type="button" class="btn  border-dark border" style="background-color:#FFD700;color:black">View Profile </button>
-                        </p>
-                        <!-- <a href="#" class="card-link text-center">Card link</a>
-                      <a href="#" class="card-link text-center">Another link</a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 ">
-                <div class="card border-dark border" >
-                    <div class="card-body ">
-                        <h5 class="card-title text-center"><img src="iconbig2.png" style=" margin-bottom:  10px;"></h5>
-                        <h4 class="card-subtitle mb-2  text-center">Gladina</h4>
-                        <p class="card-text text-center">Thane, Maharashtra<br><br>
-                            <button type="button" class="btn  border-dark border" style="background-color:#FFD700;color:black">View Profile </button>
-                        </p>
-                        <!-- <a href="#" class="card-link text-center">Card link</a>
-                      <a href="#" class="card-link text-center">Another link</a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 ">
-                <div class="card border-dark border" >
-                    <div class="card-body ">
-                        <h5 class="card-title text-center"><img src="iconbig4.png" style=" margin-bottom:  10px;"></h5>
-                        <h4 class="card-subtitle mb-2  text-center">Calista</h4>
-                        <p class="card-text text-center">Wadala, Maharashtra<br><br>
-                            <button type="button" class="btn  border-dark border" style="background-color:#FFD700;color:black">View Profile </button>
-                        </p>
-                        <!-- <a href="#" class="card-link text-center">Card link</a>
-                      <a href="#" class="card-link text-center">Another link</a> -->
-                    </div>
-                </div>
-            </div>
+        <div class="row" id="farmer-cards">
+            <?php
+            global $con;
+            // Modified query to fetch required fields
+            $query = "SELECT f.*, COUNT(p.product_id) as product_count 
+                     FROM farmerregistration f 
+                     LEFT JOIN products p ON f.farmer_id = p.farmer_fk 
+                     GROUP BY f.farmer_id 
+                     LIMIT 8";
+            $run_query = mysqli_query($con, $query);
 
+            while ($row = mysqli_fetch_array($run_query)) {
+                $farmer_name = $row['farmer_name'];
+                $farmer_phone = $row['farmer_phone'];
+                $farmer_address = isset($row['farmer_address']) ? $row['farmer_address'] : 'Address not available';
+                $product_count = $row['product_count'];
+                
+                echo "
+                <div class='col-12 col-sm-6 col-md-4 col-lg-3 mb-4'>
+                    <div class='card border-dark border'>
+                        <div class='card-body text-center'>
+                            <img src='../Images/default_avatar.png' class='card-img-top rounded-circle mb-3' 
+                                 alt='$farmer_name' style='height: 150px; width: 150px; object-fit: cover;'>
+                            <h4 class='card-subtitle mb-2'>$farmer_name</h4>
+                            <p class='card-text'><i class='fas fa-map-marker-alt text-danger'></i> $farmer_address</p>
+                            <div class='d-flex justify-content-between align-items-center'>
+                                <span class='badge bg-success text-white'>
+                                    <i class='fas fa-store'></i> $product_count Products
+                                </span>
+                                <span class='text-muted'>
+                                    <i class='fas fa-phone'></i> " . substr($farmer_phone, 0, 6) . "****
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>";
+            }
+            ?>
         </div>
-
-
+        <div class="text-center mt-4">
+            <button id="load-more" class="btn btn-primary">View More</button>
+        </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            let offset = 8;
+            $('#load-more').click(function() {
+                $.ajax({
+                    url: 'load_more_farmers.php',
+                    type: 'GET',
+                    data: { offset: offset },
+                    success: function(response) {
+                        $('#farmer-cards').append(response);
+                        offset += 8;
+                    }
+                });
+            });
+        });
+    </script>
 
     <!-- footer -->
     <section id="footer" class="myfooter">
