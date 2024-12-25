@@ -72,42 +72,11 @@ include("../Includes/db.php");
             margin-bottom: 15px;
         }
 
-        .search-box {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .search-box i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-        }
-
-        .filter-group {
-            margin-bottom: 15px;
-        }
-
-        .filter-group label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            display: block;
-        }
-
         .btn-location {
             width: 100%;
             padding: 12px;
             border-radius: 25px;
-            background: #3498db;
+            background: #2c3e50;
             color: white;
             border: none;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -115,7 +84,7 @@ include("../Includes/db.php");
         }
 
         .btn-location:hover {
-            background: #2980b9;
+            background: #34495e;
             transform: translateY(-2px);
         }
 
@@ -149,6 +118,158 @@ include("../Includes/db.php");
                 border-radius: 20px 20px 0 0;
             }
         }
+
+        .right-panel {
+            position: absolute;
+            top: 0;
+            right: -400px; /* Start off-screen */
+            width: 400px;
+            height: 100%;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .right-panel.active {
+            right: 0;
+        }
+
+        .close-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #2c3e50;
+            z-index: 1001;
+        }
+
+        .farmer-profile {
+            padding: 20px;
+        }
+
+        .farmer-profile-header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 20px;
+            position: relative;
+        }
+
+        .farmer-profile-content {
+            padding: 20px;
+        }
+
+        .custom-marker {
+            background-color: #2c3e50;
+            border-radius: 50%;
+            border: 2px solid white;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .custom-marker:hover {
+            background-color: #34495e;
+            transform: scale(1.1);
+        }
+
+        .farmer-products {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .farmer-profile-header {
+            background: #2c3e50;
+            color: white;
+            padding: 25px 20px;
+            position: relative;
+        }
+
+        .farmer-profile-header h4 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .farmer-profile-header p {
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .close-panel {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .close-panel:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .products-grid {
+            display: grid;
+            gap: 15px;
+            padding: 15px 0;
+        }
+
+        .product-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2c3e50;
+        }
+
+        .product-item h6 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .product-details span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Remove routing-related styles */
+        .leaflet-routing-container,
+        .leaflet-routing-alt {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -161,11 +282,6 @@ include("../Includes/db.php");
             <h4><i class="fas fa-map-marker-alt mr-2"></i>Find Farmers Near You</h4>
         </div>
         <div class="side-panel-content">
-            <div class="search-box">
-                <input type="text" id="location-search" placeholder="Search location..." class="form-control">
-                <i class="fas fa-search"></i>
-            </div>
-
             <div class="filter-container">
                 <div class="filter-group">
                     <label>Filter by Product Type</label>
@@ -177,8 +293,8 @@ include("../Includes/db.php");
                     </select>
                 </div>
                 
-                <button id="find-me" class="btn-location">
-                    <i class="fas fa-location-arrow mr-2"></i>Use My Location
+                <button id="find-me" class="btn-location mt-3">
+                    <i class="fas fa-crosshairs mr-2"></i>Center Map on My Location
                 </button>
             </div>
 
@@ -188,34 +304,97 @@ include("../Includes/db.php");
         </div>
     </div>
 
+    <!-- Add right panel for farmer profile -->
+    <div class="right-panel" id="farmerProfile">
+        <button class="close-panel" onclick="closeProfile()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div id="profileContent"></div>
+    </div>
+
     <script>
-        // Initialize map
+        // Initialize map and base layer
         var map = L.map('map').setView([30.3753, 69.3451], 6);
+        var userMarker = null;
         
-        // Add a modern-looking map style
-        L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '©OpenStreetMap, ©CartoDB',
+            subdomains: 'abcd',
+            maxZoom: 19
         }).addTo(map);
 
         // Store all markers
         var markers = [];
 
+        // Custom marker icon
+        var createCustomMarker = function(farmer) {
+            return L.divIcon({
+                className: 'custom-marker',
+                html: '<i class="fas fa-user-circle"></i>',
+                iconSize: [30, 30]
+            });
+        };
+
+        // Function to show farmer profile
+        function showFarmerProfile(farmer) {
+            const profilePanel = document.getElementById('farmerProfile');
+            const profileContent = document.getElementById('profileContent');
+
+            // Center map on farmer location
+            map.setView([farmer.latitude, farmer.longitude], 13);
+
+            // Fetch farmer's products
+            fetch(`get_farmer_products.php?farmer_id=${farmer.id}`)
+                .then(response => response.json())
+                .then(products => {
+                    profileContent.innerHTML = `
+                        <div class="farmer-profile-header">
+                            <button class="close-panel" onclick="closeProfile()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <h4>${farmer.name}</h4>
+                            <p><i class="fas fa-map-marker-alt"></i> ${farmer.district}, ${farmer.state}</p>
+                            <p><i class="fas fa-phone"></i> ${farmer.phone}</p>
+                        </div>
+                        <div class="farmer-profile-content">
+                            <div class="farmer-products">
+                                <h5>Available Products</h5>
+                                <div class="products-grid">
+                                    ${products.map(product => `
+                                        <div class="product-item">
+                                            <h6>${product.product_title}</h6>
+                                            <div class="product-details">
+                                                <span><i class="fas fa-tag"></i> Rs.${product.product_price}/kg</span>
+                                                <span><i class="fas fa-box"></i> ${product.product_stock} kg</span>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+            profilePanel.classList.add('active');
+        }
+
+        function closeProfile() {
+            document.getElementById('farmerProfile').classList.remove('active');
+        }
+
         // Function to add farmer to list and map
         function addFarmer(farmer) {
-            // Add marker to map
-            var marker = L.marker([farmer.latitude, farmer.longitude])
-                .addTo(map)
-                .bindPopup(`
-                    <div class='farmer-info'>
-                        <h5>${farmer.name}</h5>
-                        <p>${farmer.district}, ${farmer.state}</p>
-                        <a href='FarmerProfile.php?farmer_id=${farmer.id}' class='btn btn-primary btn-sm'>View Profile</a>
-                    </div>
-                `);
+            var marker = L.marker([farmer.latitude, farmer.longitude], {
+                icon: createCustomMarker(farmer)
+            }).addTo(map);
+            
+            marker.on('click', function() {
+                showFarmerProfile(farmer);
+            });
             
             markers.push(marker);
 
-            // Add to list
+            // Add to list with modified click handler
             var listItem = document.createElement('div');
             listItem.className = 'farmer-card';
             listItem.innerHTML = `
@@ -223,10 +402,10 @@ include("../Includes/db.php");
                 <p><i class="fas fa-map-marker-alt"></i> ${farmer.district}, ${farmer.state}</p>
             `;
             
-            // Click on list item centers map on farmer
             listItem.onclick = function() {
                 map.setView([farmer.latitude, farmer.longitude], 13);
                 marker.openPopup();
+                showFarmerProfile(farmer);
             };
             
             document.getElementById('farmer-list').appendChild(listItem);
@@ -236,37 +415,59 @@ include("../Includes/db.php");
         <?php
         $query = "SELECT f.*, fl.latitude, fl.longitude 
                   FROM farmerregistration f 
-                  JOIN farmer_locations fl ON f.farmer_id = fl.farmer_id";
+                  INNER JOIN farmer_locations fl ON f.farmer_id = fl.farmer_id 
+                  WHERE fl.latitude IS NOT NULL 
+                  AND fl.longitude IS NOT NULL 
+                  AND fl.latitude != 0 
+                  AND fl.longitude != 0";
         $result = mysqli_query($con, $query);
 
         while($row = mysqli_fetch_assoc($result)) {
-            if($row['latitude'] && $row['longitude']) {
+            // Additional validation before outputting JavaScript
+            if(is_numeric($row['latitude']) && is_numeric($row['longitude']) 
+               && $row['latitude'] != 0 && $row['longitude'] != 0) {
                 echo "addFarmer({
-                    id: {$row['farmer_id']},
-                    name: '{$row['farmer_name']}',
-                    district: '{$row['farmer_district']}',
-                    state: '{$row['farmer_state']}',
-                    latitude: {$row['latitude']},
-                    longitude: {$row['longitude']}
+                    id: " . (int)$row['farmer_id'] . ",
+                    name: '" . addslashes($row['farmer_name']) . "',
+                    phone: '" . addslashes($row['farmer_phone']) . "',
+                    district: '" . addslashes($row['farmer_district']) . "',
+                    state: '" . addslashes($row['farmer_state']) . "',
+                    latitude: " . floatval($row['latitude']) . ",
+                    longitude: " . floatval($row['longitude']) . "
                 });\n";
             }
         }
         ?>
 
         // Geolocation
-        document.getElementById('find-me').addEventListener('click', function() {
+        function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     var lat = position.coords.latitude;
                     var lng = position.coords.longitude;
+                    
+                    // Remove existing user marker if any
+                    if (userMarker) {
+                        map.removeLayer(userMarker);
+                    }
+
+                    // Add new user marker
+                    userMarker = L.marker([lat, lng], {
+                        icon: L.divIcon({
+                            className: 'custom-marker',
+                            html: '<i class="fas fa-user"></i>',
+                            iconSize: [30, 30]
+                        })
+                    }).addTo(map)
+                    .bindPopup('You are here!')
+                    .openPopup();
+
                     map.setView([lat, lng], 13);
-                    L.marker([lat, lng])
-                        .addTo(map)
-                        .bindPopup('You are here!')
-                        .openPopup();
                 });
             }
-        });
+        }
+
+        document.getElementById('find-me').addEventListener('click', getLocation);
     </script>
 </body>
 </html>
