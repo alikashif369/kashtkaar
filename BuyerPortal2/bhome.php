@@ -202,11 +202,51 @@ include("../Functions/functions.php");
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            height: 250px; /* Fixed height for consistency */
+            overflow: hidden;
+        }
+
         .product-image {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
-            border-bottom: 2px solid var(--accent-color);
+            object-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .badge-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+        }
+
+        .stock-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: rgba(44, 62, 80, 0.85);
+            color: white;
+        }
+
+        .farmer-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+            background: rgba(44, 62, 80, 0.85);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
 
         .product-info {
@@ -493,6 +533,127 @@ include("../Functions/functions.php");
         .cart-btn:hover {
             color: var(--accent-color);
         }
+
+        .category-filters .btn {
+            transition: all 0.3s ease;
+            border: none;
+            padding: 12px 20px;
+        }
+
+        .category-filters .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header h2 {
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .hero-banner {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-card {
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        #fruits, #vegetables, #products {
+            scroll-margin-top: 80px;
+        }
+
+        .category-filters {
+            background: var(--light-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .category-dropdown {
+            width: 100%;
+        }
+
+        .category-btn {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn i:last-child {
+            margin-left: auto;
+        }
+
+        .fruits-btn {
+            background: linear-gradient(135deg, #FF4E50, #F9D423);
+        }
+
+        .vegetables-btn {
+            background: linear-gradient(135deg, #56AB2F, #A8E063);
+        }
+
+        .crops-btn {
+            background: linear-gradient(135deg, #F2994A, #F2C94C);
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-dropdown .dropdown-menu {
+            width: 100%;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-top: 0.5rem;
+        }
+
+        .category-dropdown .dropdown-item {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .category-dropdown .dropdown-item:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .category-filters {
+                padding: 1rem;
+            }
+            
+            .category-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 
 </head>
@@ -570,102 +731,103 @@ include("../Functions/functions.php");
         </div>
     </nav>
 
-    <div class="container">
-        <div class="d-flex justify-content-around bg-white mb-3">
-            <div class="p-2">
-                <div class="dropdown">
-                    <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Fruits
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <?php getFruits(); ?>
+    <!-- Categories Filter Bar -->
+    <div class="container mt-4">
+        <div class="category-filters">
+            <div class="row g-3 justify-content-center">
+                <div class="col-md-4">
+                    <div class="category-dropdown">
+                        <button class="category-btn fruits-btn" type="button" data-toggle="dropdown">
+                            <i class="fas fa-apple-alt"></i>
+                            <span>Fruits</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php getFruits(); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-dropdown">
+                        <button class="category-btn vegetables-btn" type="button" data-toggle="dropdown">
+                            <i class="fas fa-carrot"></i>
+                            <span>Vegetables</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php getVegetables(); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-dropdown">
+                        <button class="category-btn crops-btn" type="button" data-toggle="dropdown">
+                            <i class="fas fa-seedling"></i>
+                            <span>Crops</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <?php getCrops(); ?>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="p-2">
-                <div class="dropdown">
-                    <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Vegetables
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <?php getVegetables(); ?>
+        </div>
+    </div>
+
+    <!-- Hero Banner -->
+    <div class="container mt-4">
+        <div class="hero-banner position-relative rounded overflow-hidden">
+            <img src="b4.jpeg" class="w-100" alt="Fresh Produce" style="height: 400px; object-fit: cover;">
+            <div class="position-absolute top-0 left-0 w-100 h-100 d-flex align-items-center" style="background: rgba(0,0,0,0.4);">
+                <div class="container">
+                    <div class="row"></div></div>
+                        <div class="col-md-6 text-white">
+                            <h1 class="display-4 font-weight-bold">Fresh From Farm</h1>
+                            <p class="lead">Direct from farmers to your table. Quality produce at the best prices.</p>
+                            <a href="#products" class="btn btn-lg btn-primary">Shop Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="p-2">
-                <div class="dropdown">
-                    <button class="btn btn-green mybtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Crops
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <?php getCrops(); ?>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
-    <div class="container"> <img src="b4.jpeg" class="img-fluid firstimage d-block mx-auto" alt="Responsive image">
+    <!-- Fresh Fruits Section -->
+    <div class="container mt-5" id="fruits">
+        <div class="section-header d-flex align-items-center justify-content-between mb-4">
+            <h2 class="mb-0">Fresh Fruits</h2>
+            <a href="../BuyerPortal2/Categories.php?cat=fruits" class="btn btn-outline-primary">View All</a>
+        </div>
+        <div class="row g-4">
+            <?php getFruitsHomepage(); ?>
+        </div>
     </div>
-    <br>
-    <br>
 
-    <div class="container">
-        <div class="text-center">
-            <h1 id="headings" class="guard"><span><b>Fresh Fruits</b></span></h1>
+    <!-- Fresh Vegetables Section -->
+    <div class="container mt-5" id="vegetables">
+        <div class="section-header d-flex align-items-center justify-content-between mb-4">
+            <h2 class="mb-0">Fresh Vegetables</h2>
+            <a href="../BuyerPortal2/Categories.php?cat=vegetables" class="btn btn-outline-success">View All</a>
         </div>
-        <hr>
-        <div class="row BigBox">
-            <?php
-            getFruitsHomepage();
-            ?>
-            <hr>
+        <div class="row g-4">
+            <?php getVegetablesHomepage(); ?>
         </div>
-        <hr>
     </div>
-    <br><br>
 
-
-    <div class="container">
-        <div class="text-center">
-            <h1 id="headings" class="guard"><span><b>Fresh Vegetables </b></span>
-            </h1>
+    <!-- Best Selling Products -->
+    <div class="container mt-5 mb-5" id="products">
+        <div class="section-header text-center mb-5">
+            <h2 class="display-5">Best Selling Products</h2>
+            <p class="text-muted">Most popular choices by our customers across Pakistan</p>
         </div>
-
-        <hr>
-
-        <div class="row BigBox">
-
-            <?php
-            getVegetablesHomepage();
-            ?>
-
-            <hr>
-        </div>
-        <hr>
-    </div>
-    <br><br>
-
-    <div class="container">
-
-        <div class="text-center">
-            <h1 id="headings" class="longguard"><span><b>Best Selling Products All Over Pakistan </b></span>
-            </h1>
-        </div>
-        <br>
-        <div class="row">
+        <div class="row g-4">
             <?php
             cart();
             getProducts();
             ?>
         </div>
-        <br><br>
-
-
     </div>
-    </div>
-
-
 
     <!-- footer -->
     <section id="footer" class="myfooter">
@@ -684,7 +846,7 @@ include("../Functions/functions.php");
                 
                 <div class="footer-section">
                     <h5>Quick Links</h5>
-                    <ul class="contact-info">
+                    <ul class="contact-info"></ul>
                         <li><a href="bhome.php">Home</a></li>
                         <li><a href="Transaction.php">Transactions</a></li>
                         <li><a href="saveforlater.php">Save For Later</a></li>
@@ -695,7 +857,7 @@ include("../Functions/functions.php");
                 <div class="footer-section">
                     <h5>Contact Us</h5>
                     <ul class="contact-info">
-                        <li>
+                        <li></li>
                             <i class="fas fa-phone"></i>
                             +92 123 456 7890
                         </li>

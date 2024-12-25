@@ -107,120 +107,123 @@
         global $con;
         $query = "select * from products order by RAND() LIMIT 0,6";
         $run_query = mysqli_query($con, $query);
-        echo "<br>";
+        
         while ($rows = mysqli_fetch_array($run_query)) {
             $product_id = $rows['product_id'];
             $product_title = $rows['product_title'];
             $product_image = $rows['product_image'];
             $product_price = $rows['product_price'];
-            $product_delivery = $rows['product_delivery'];
-            $product_stock = $rows['product_stock']; // Fetch product stock
+            $product_stock = $rows['product_stock'];
             $farmer_fk = $rows['farmer_fk'];
-            $farmer_name_query = "select farmer_name from farmerregistration where farmer_id = $farmer_fk";
-            $running_query_name = mysqli_query($con, $farmer_name_query);
-            while ($names = mysqli_fetch_array($running_query_name)) {
-                $name = $names['farmer_name'];
-            }
-            if ($product_delivery == "yes") {
-                $product_delivery = "Delivery by Farmer";
-            } else {
-                $product_delivery = "Delivery by Farmer Not Available";
-            }
-
+            
+            // Get farmer name
+            $farmer_query = mysqli_query($con, "SELECT farmer_name FROM farmerregistration WHERE farmer_id = $farmer_fk");
+            $farmer_name = mysqli_fetch_array($farmer_query)['farmer_name'];
+            
             echo "
-                <div class='col col-12 col-sm-12 col-md-4 col-xl-4 col-lg-4'>
-                    <div class='card pb-1 pl-1 pr-1 pt-0' style='height:542px'>
-                        <br>
-                        <div class='mt-0'><b>
-                                <h4><img src='iconsmall.png' style='width: 28px; margin-bottom:  10px;'> $name
-                            </b></h4>
+            <div class='col-md-4 col-sm-6 mb-4'>
+                <div class='product-card h-100'>
+                    <div class='farmer-badge'>
+                        <i class='fas fa-user-circle'></i> $farmer_name
+                    </div>
+                    <div class='product-image-container'>
+                        <img src='../Admin/product_images/$product_image' class='product-image' alt='$product_title'>
+                    </div>
+                    <div class='product-details p-3'>
+                        <h5 class='product-title mb-2'>$product_title</h5>
+                        <div class='d-flex justify-content-between align-items-center mb-3'>
+                            <span class='product-price'>₨ $product_price/kg</span>
+                            <span class='stock-badge " . ($product_stock < 10 ? 'low-stock' : '') . "'>
+                                $product_stock kgs left
+                            </span>
                         </div>
-                        <a href='../BuyerPortal2/ProductDetails.php?id=$product_id'>
-                            <img class='card-img-top' src='../Admin/product_images/$product_image' alt='Card image cap' height='300px'>
-                        </a>
-                        <div class='card-body pb-0'>
-                            <div class='row'>
-                                <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'>
-                                    <div class='input-group mb'>
-                                        <div class='input-group-prepend'>
-                                            <h5 class='card-title font-weight-bold'>$product_title</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class='col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12'>
-                                    <div class='input-group mb-1'>
-                                        <div class='input-group-prepend'>
-                                            <span class='input-group-text bg-warning border-secondary p-1' style='color:black;' id='inputGroup-sizing-default'><b>Quantity: $product_stock</b></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class='card-text mb-2 font-weight-bold'>PRICE: $product_price Rs/kg</p>
-                            <div class='row'>
-                                <div class='col-1 col-xl-3 col-lg-2 col-md-2 col-sm-2'></div>
-                                <div class='col-12 col-xl-6 col-lg-6 col-md-6  col-sm-12'>
-                                    <a href='../BuyerPortal2/bhome.php?add_cart=$product_id' class='btn btn-warning border-secondary mr-1' style='color:black; font-weight:50px;'>Add to cart<img src='carticons.png' height='20px'></a>
-                                </div>
-                            </div>
+                        <div class='d-flex gap-2'>
+                            <a href='ProductDetails.php?id=$product_id' class='btn btn-outline-primary flex-grow-1'>View Details</a>
+                            <a href='bhome.php?add_cart=$product_id' class='btn btn-primary'>
+                                <i class='fas fa-shopping-cart'></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            ";
+            </div>";
         }
     }
-
-
 
     function getVegetablesHomepage()
     {
         global $con;
         $query = "select * from products where product_cat = 2 and not (product_image = '') order by RAND() LIMIT 0,4";
         $run_query = mysqli_query($con, $query);
+        
         while ($rows = mysqli_fetch_array($run_query)) {
             $product_id = $rows['product_id'];
             $product_title = $rows['product_title'];
             $product_image = $rows['product_image'];
             $product_price = $rows['product_price'];
-            $product_delivery = $rows['product_delivery'];
-            $product_cat = $rows['product_cat'];
+            $product_stock = $rows['product_stock'];
             $product_type = $rows['product_type'];
-
-            // echo "  <div class='veg'>
-            //             <a href='../BuyerPortal/BuyerProductDetails.php?id=$product_id'><img src='../Admin/product_images/$product_image' height='250px' width='300px' ></a>
-            //         </div>";
-
-            echo "<div class='column kolum'>
-                <div class='img-thumbnail ''>
-                     <a href='../BuyerPortal2/Categories.php?type=$product_type'>
-                        <img class='rounded mx-auto d-block images' src='../Admin/product_images//$product_image' width='350px' height='200px' alt='image'>
-                     </a>
+            
+            echo "
+            <div class='col-md-3 col-sm-6 mb-4'>
+                <div class='product-card h-100'>
+                    <div class='badge-overlay'>
+                        <span class='top-left badge'>" . ($product_stock > 0 ? 'In Stock' : 'Out of Stock') . "</span>
+                    </div>
+                    <div class='product-image-container'>
+                        <img src='../Admin/product_images/$product_image' class='product-image' alt='$product_title'>
+                    </div>
+                    <div class='product-details p-3'>
+                        <h5 class='product-title mb-2'>$product_title</h5>
+                        <div class='d-flex justify-content-between align-items-center mb-2'>
+                            <span class='product-price'>₨ $product_price/kg</span>
+                            <span class='stock-badge " . ($product_stock < 10 ? 'low-stock' : '') . "'>
+                                $product_stock kgs left
+                            </span>
+                        </div>
+                        <a href='ProductDetails.php?id=$product_id' class='btn btn-outline-success w-100'>View Details</a>
+                    </div>
                 </div>
             </div>";
         }
     }
 
-    function getFruitsHomepage()
-    {
+    function getFruitsHomepage() {
         global $con;
         $query = "select * from products where product_cat = 3 and not (product_image = '') order by RAND() LIMIT 0,4";
         $run_query = mysqli_query($con, $query);
+        
         while ($rows = mysqli_fetch_array($run_query)) {
             $product_id = $rows['product_id'];
             $product_title = $rows['product_title'];
             $product_image = $rows['product_image'];
             $product_price = $rows['product_price'];
-            $product_delivery = $rows['product_delivery'];
-            $product_cat = $rows['product_cat'];
+            $product_stock = $rows['product_stock'];
             $product_type = $rows['product_type'];
-            echo "<div class='column kolum'>
-                <div class='img-thumbnail ''>
-                     <a href='../BuyerPortal2/Categories.php?type=$product_type'>
-                        <img class='rounded mx-auto d-block images' src='../Admin/product_images//$product_image' width='350px' height='200px' alt='image'>
-                     </a>
+            
+            echo "
+            <div class='col-md-3 col-sm-6 mb-4'>
+                <div class='product-card h-100'>
+                    <div class='badge-overlay'>
+                        <span class='top-left badge'>" . ($product_stock > 0 ? 'In Stock' : 'Out of Stock') . "</span>
+                    </div>
+                    <div class='product-image-container'>
+                        <img src='../Admin/product_images/$product_image' class='product-image' alt='$product_title'>
+                    </div>
+                    <div class='product-details p-3'>
+                        <h5 class='product-title mb-2'>$product_title</h5>
+                        <div class='d-flex justify-content-between align-items-center mb-2'>
+                            <span class='product-price'>₨ $product_price/kg</span>
+                            <span class='stock-badge " . ($product_stock < 10 ? 'low-stock' : '') . "'>
+                                $product_stock kgs left
+                            </span>
+                        </div>
+                        <a href='ProductDetails.php?id=$product_id' class='btn btn-outline-primary w-100'>View Details</a>
+                    </div>
                 </div>
             </div>";
         }
     }
+
     //function  which is link with FarmerProductDetails
     // function getFarmerProductDetails()
     // {
