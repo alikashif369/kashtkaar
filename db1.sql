@@ -230,8 +230,9 @@ CREATE TABLE IF NOT EXISTS `farmer_locations` (
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `farmer_id` (`farmer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `farmer_id` (`farmer_id`),
+  CONSTRAINT `fk_farmer_id` FOREIGN KEY (`farmer_id`) REFERENCES `farmerregistration` (`farmer_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -260,9 +261,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `product_id`, `qty`, `address`, `delivery`, `phonenumber`, `total`, `payment`, `buyer_phonenumber`) VALUES
-(56, 28, 1, ' Raj Uday 234', 'Buyer', 8169193101, 45, 'cod', 1234567890),
-(57, 31, 1, 'I am Hungry', 'Buyer', 8169193101, 25, 'cod', 1234567890),
-(58, 3, 2, ' Raj Uday 234', 'Farmer', 8169193101, 10, 'paytm', 1234567890),
+
 (60, 32, 1, 'Working', 'Buyer', 8169193101, 10, 'cod', 1234567890),
 (61, 38, 9, 'House #12, Street #45, Karachi', 'Farmer', 3127892832, 1080, 'paytm', 3001234567),
 (62, 29, 1, 'House #12, Street #45, Karachi', 'Farmer', 8169193102, 50, 'paytm', 3001234567),
